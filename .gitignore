@@ -1,0 +1,13 @@
+# Generated review page - regenerate with: py tools/render_review.py
+review.html
+
+# Local / machine-specific
+.claude/settings.local.json
+
+# Dependencies & logs (none checked in today, kept as guards)
+node_modules/
+*.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Learn HTML Broadcast Graphics</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <span class="bug">GFX</span>
+      <span class="name">Learn HTML Broadcast Graphics</span>
+      <span id="progress"></span>
+    </div>
+
+    <div id="player">
+      <div class="lesson-head">
+        <div id="lesson-tag"></div>
+        <div id="concept"></div>
+        <div id="explain"></div>
+      </div>
+
+      <div id="stage-wrap"><!-- renderer iframe injected here --></div>
+      <div class="stage-ctrls">
+        <button id="btn-play">PLAY</button>
+        <button id="btn-stop">STOP</button>
+        <button id="btn-view">Show transparency</button>
+      </div>
+
+      <div id="code"></div>
+      <div id="task"></div>
+      <div id="feedback" class="feedback"></div>
+      <button id="continue">Continue</button>
+    </div>
+
+    <div id="done">
+      <div class="big">That's a wrap on Unit 1.</div>
+      <p>You read a real template, changed it, fixed a broken tag, and put a
+         rebranded strap on air - the same job a broadcast graphics operator does.</p>
+      <div class="reel">
+        <span class="badge">First Edit</span>
+        <span class="badge">Tag Anatomy</span>
+        <span class="badge">On Air</span>
+      </div>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+  <script src="content.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

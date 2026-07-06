@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Learn HTML Broadcast Graphics</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <div class="app">
+    <div class="topbar">
+      <span class="bug">GFX</span>
+      <span class="name">Learn HTML Broadcast Graphics</span>
+      <span id="progress"></span>
+    </div>
+
+    <!-- HOME: the course path -->
+    <div id="home">
+      <div id="units"></div>
+    </div>
+
+    <!-- PLAYER -->
+    <div id="player" style="display:none">
+      <div class="playbar">
+        <button id="btn-home" class="linkbtn">&lt; Course</button>
+      </div>
+      <div class="lesson-head">
+        <div id="lesson-tag"></div>
+        <div id="concept"></div>
+        <div id="explain"></div>
+      </div>
+
+      <div id="stage-wrap"></div>
+      <div class="stage-ctrls">
+        <button id="btn-play">PLAY</button>
+        <button id="btn-stop">STOP</button>
+        <button id="btn-next" style="display:none">CONTINUE</button>
+        <button id="btn-view">Transparency</button>
+      </div>
+
+      <div id="panel" class="panel" style="display:none"></div>
+      <div id="code"></div>
+      <div id="task"></div>
+      <div id="feedback" class="feedback"></div>
+      <button id="continue">Continue</button>
+    </div>
+  </div>
+
+  <script src="renderer.js"></script>
+  <script src="content/unit00.js"></script>
+  <script src="content/unit01.js"></script>
+  <script src="content/unit02.js"></script>
+  <script src="content/unit03.js"></script>
+  <script src="content/unit04.js"></script>
+  <script src="content/unit05.js"></script>
+  <script src="content/unit06.js"></script>
+  <script src="content/unit07.js"></script>
+  <script src="content/unit08.js"></script>
+  <script src="content/unit09.js"></script>
+  <script src="engine.js"></script>
+</body>
+</html>
