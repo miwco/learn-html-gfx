@@ -57,11 +57,11 @@ COURSE_DATA.push({
           blocks: ["<div>", "  <div>Tomas Berg</div>", "  <div>Sports Reporter</div>", "</div>"],
           slot: "html",
           render: { autoplay: true },
-          feedback: { default: "See it stranded outside the box? Lines belong between the parent's opening and closing tags." }
+          feedback: { default: "Both lines belong between the parent's opening <div> and its closing </div> - a block placed after the final </div> is no longer inside the wrapper." }
         },
         {
           type: "arrange",
-          prompt: "The title escaped the strap - it sits detached at the top-left. Rebuild the strap with both lines back inside the parent.",
+          prompt: "In this arrangement the title line 'News Anchor' landed after the wrapper's closing </div>, outside the parent. Rebuild the strap so both lines sit between the parent's opening and closing tags.",
           blocks: ["<div>", "  <div>Maria Kranz</div>", "  <div>News Anchor</div>", "</div>"],
           slot: "html",
           render: { html: "<div>\n  <div>Maria Kranz</div>\n</div>\n<div>News Anchor</div>", autoplay: true },
@@ -102,12 +102,13 @@ COURSE_DATA.push({
         },
         {
           type: "fix", kernel: true,
-          prompt: "The LIVE badge's highlight bleeds across the rest of the line. Boxes must close inside-out - tap the first tag that's in the wrong place.",
+          prompt: "These tags close in the wrong order: <div><span>LIVE</div></span>. Boxes must close inside-out - tap the first closing tag that's out of place.",
           render: { html: "<div><span>LIVE</div></span>", autoplay: true },
           tokens: ["<div>", "<span>", "LIVE", "</div>", "</span>"],
           answer: 3,
           fixedToken: "</span>",
           fixedRender: { html: "<div><span>LIVE</span></div>", play: true },
+          success: "Right - inside-out: the span opened last, so it closes first. It looks the same on screen (the browser quietly patches this one), but correct nesting keeps styles and scripts pointing at the right box.",
           feedback: {
             0: "The openers are fine - LIVE should be a span inside a div. The problem is the closing order.",
             1: "The openers are fine - LIVE should be a span inside a div. The problem is the closing order.",
@@ -181,14 +182,15 @@ COURSE_DATA.push({
         },
         {
           type: "fix",
-          prompt: "Both lines pulse - they carry the same id. Only one element may carry each id. Tap the one that should change.",
+          prompt: "Both lines carry id=\"name\", but an id must point to exactly one element. Tap the line that should get a different id.",
           render: { html: "<div>\n  <div id=\"name\">Maria Kranz</div>\n  <div id=\"name\">News Anchor</div>\n</div>", autoplay: true },
           tokens: ["<div id=\"name\">Maria Kranz</div>", "<div id=\"name\">News Anchor</div>"],
           answer: 1,
           fixedToken: "<div id=\"title\">News Anchor</div>",
           fixedRender: { html: "<div>\n  <div id=\"name\">Maria Kranz</div>\n  <div id=\"title\">News Anchor</div>\n</div>", play: true },
+          success: "Right - ids don't change how the strap looks, but now each line has its own name, so CSS and JavaScript can point at exactly one of them.",
           feedback: {
-            0: "That one really IS the name. The title line is wearing the wrong badge."
+            0: "That one really IS the name - it's the title line that needs an id of its own."
           }
         },
         {
@@ -244,7 +246,7 @@ COURSE_DATA.push({
             { text: "1",
               feedback: "Both lines wear the label, so both change - that's exactly why we used a class and not an id." },
             { text: "Every element in the template.",
-              feedback: "Only the elements CARRYING the class. The logo has no class=\"line\", so it's untouched." }
+              feedback: "Only the elements CARRYING the class. The wrapper div has no class=\"line\", so it's untouched." }
           ]
         },
         {
@@ -272,8 +274,17 @@ COURSE_DATA.push({
         },
         {
           type: "fix",
-          prompt: "One headline won't take the shared style. Tap the odd one out.",
-          render: { html: "<div class=\"headline\">Storm warning issued for the west coast</div>\n<div class=\"headlnie\">Parliament votes on the budget tonight</div>\n<div class=\"headline\">HIFK wins the derby 4 - 2</div>", autoplay: true },
+          prompt: "All three headlines should carry class=\"headline\", but one is misspelled, so in Unit 3 it won't pick up the shared style. Read the class names and tap the odd one out.",
+          render: {
+            house: false, autoplay: true, mode: "video",
+            html: '<div class="hlrow">' +
+                  '<div class="headline">Storm warning issued for the west coast</div>' +
+                  '<div class="headlnie">Parliament votes on the budget tonight</div>' +
+                  '<div class="headline">HIFK wins the derby 4 - 2</div></div>',
+            css: '.hlrow{position:absolute;left:0;right:0;bottom:0;background:#0a2a5e;' +
+                 'box-sizing:border-box;padding:22px 60px;}' +
+                 '.hlrow div{color:#fff;font-size:32px;font-weight:600;line-height:1.5;}'
+          },
           tokens: [
             "<div class=\"headline\">Storm warning issued for the west coast</div>",
             "<div class=\"headlnie\">Parliament votes on the budget tonight</div>",
@@ -281,9 +292,16 @@ COURSE_DATA.push({
           ],
           answer: 1,
           fixedToken: "<div class=\"headline\">Parliament votes on the budget tonight</div>",
-          fixedRender: { html: "<div class=\"headline\">Storm warning issued for the west coast</div>\n<div class=\"headline\">Parliament votes on the budget tonight</div>\n<div class=\"headline\">HIFK wins the derby 4 - 2</div>", play: true },
+          fixedRender: {
+            html: '<div class="hlrow">' +
+                  '<div class="headline">Storm warning issued for the west coast</div>' +
+                  '<div class="headline">Parliament votes on the budget tonight</div>' +
+                  '<div class="headline">HIFK wins the derby 4 - 2</div></div>',
+            play: true
+          },
+          success: "Right - 'headlnie' is the typo. Class names must match exactly, letter for letter, or the shared styling you add in Unit 3 skips this line.",
           feedback: {
-            default: "That one renders correctly - compare the class spellings letter by letter. Machines don't forgive typos."
+            default: "That class is spelled right. Compare the three class names letter by letter - one of them is off."
           }
         }
       ]
@@ -463,12 +481,13 @@ COURSE_DATA.push({
         },
         {
           type: "fix",
-          prompt: "The LIVE badge's highlight bleeds across the line again. Tap the first tag that's in the wrong place.",
+          prompt: "The same mistake again: <div><span>LIVE</div></span>. Tap the first closing tag that's out of place.",
           render: { html: "<div><span>LIVE</div></span>", autoplay: true },
           tokens: ["<div>", "<span>", "LIVE", "</div>", "</span>"],
           answer: 3,
           fixedToken: "</span>",
           fixedRender: { html: "<div><span>LIVE</span></div>", play: true },
+          success: "Right - inside-out again: the span closes before the div. No visible change here, but on a real badge with its own colour this is exactly what keeps the style on the word and not the whole line.",
           feedback: {
             4: "Nearly - the first tag out of place is the </div>: the span opened last, so it must close first.",
             default: "Boxes close from the inside out. The span opened last, so it must close first - before the div."

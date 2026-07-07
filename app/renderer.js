@@ -2,7 +2,8 @@
 // Sandboxed (allow-scripts only): template HTML/CSS/JS runs in an isolated origin.
 //
 // Message protocol (app -> stage):
-//   {__gfxLoad:{html,css,js,house,mode,overlay,autoplay}}  full template (re)load
+//   {__gfxLoad:{html,css,js,house,kind,mode,overlay,marker,autoplay}}  full template (re)load
+//     marker:{x,y,label?}  draws a crosshair at stage px (x,y) with an (x, y) readout
 //   {__gfxSet:{mode?,highlight?,cssOff?}}                  view state tweaks
 //   {__gfxCmd:"play"|"stop"|"next"}                        lifecycle buttons
 //   {__gfxUpdate:{f0:"...",...}}                            operator panel update
@@ -21,7 +22,9 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
     background:
       linear-gradient(90deg,transparent 0 8%,rgba(255,255,255,.03) 8% 8.3%,transparent 8.3%),
       radial-gradient(60% 40% at 78% 34%, rgba(120,150,220,.18), transparent 60%),
-      radial-gradient(40% 30% at 22% 30%, rgba(200,180,120,.10), transparent 60%);}
+      radial-gradient(40% 30% at 22% 30%, rgba(200,180,120,.10), transparent 60%),
+      /* lower-third studio glow so a semi-transparent panel visibly reveals scene */
+      radial-gradient(70% 46% at 50% 90%, rgba(150,170,215,.20), transparent 72%);}
   #frame.transparent{background:
     conic-gradient(#c9c9c9 90deg,#8f8f8f 0 180deg,#c9c9c9 0 270deg,#8f8f8f 0)
     0 0/40px 40px;}
@@ -40,19 +43,61 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
   #overlay.safe::before{content:"TITLE SAFE";position:absolute;inset:54px 96px;
     border:3px dashed rgba(232,185,12,.65);color:rgba(232,185,12,.8);
     font:700 24px/1 "Segoe UI",sans-serif;padding:10px;letter-spacing:.2em;}
+
+  /* coordinate marker + live (x, y) readout, positioned in stage px */
+  #marker{position:absolute;display:none;z-index:998;pointer-events:none;}
+  #marker.on{display:block;}
+  #marker::before,#marker::after{content:"";position:absolute;
+    background:rgba(232,185,12,.98);box-shadow:0 0 0 1.5px rgba(0,0,0,.5);}
+  #marker::before{left:-28px;top:-2px;width:56px;height:4px;}
+  #marker::after{left:-2px;top:-28px;width:4px;height:56px;}
+  #marker .rd{position:absolute;left:22px;top:14px;background:rgba(10,14,24,.9);
+    color:#e8b90c;font:700 30px/1 "Segoe UI",sans-serif;padding:8px 14px;
+    border-radius:5px;white-space:nowrap;letter-spacing:.04em;}
+
+  /* friendly on-air error note - plain language, never raw JS jargon */
+  #err{position:absolute;left:0;right:0;bottom:0;z-index:1000;display:none;
+    background:linear-gradient(0deg,rgba(140,22,22,.97),rgba(122,18,18,.97));
+    color:#fff;font:600 30px/1.35 "Segoe UI",sans-serif;padding:22px 40px;
+    border-top:4px solid #ff5a5a;}
+  #err.on{display:block;}
+  #err::before{content:"GRAPHIC ERROR";display:block;font:800 18px/1 "Segoe UI",sans-serif;
+    letter-spacing:.22em;color:#ffb3b3;margin-bottom:9px;}
 </style>
 <style id="house"></style>
 <style id="tplcss"></style>
 <div id="frame" class="video"><div id="stage"><div id="content"></div>
-<div id="overlay"></div></div></div>
+<div id="overlay"></div><div id="marker"><span class="rd"></span></div>
+<div id="err"></div></div></div>
 <script>
 (function(){
   var frame=document.getElementById('frame'),
       stage=document.getElementById('stage'),
       content=document.getElementById('content'),
       overlay=document.getElementById('overlay'),
+      marker=document.getElementById('marker'),
+      markerRd=marker.querySelector('.rd'),
+      errEl=document.getElementById('err'),
       houseStyle=document.getElementById('house'),
       tplcss=document.getElementById('tplcss');
+
+  // Turn a raw JS error into a plain-language on-air note a beginner can read -
+  // no null / undefined / TypeError / SyntaxError jargon ever reaches the student.
+  function translateError(e){
+    var name=(e&&e.name)||'', m=String((e&&e.message)||e||'');
+    if(name==='SyntaxError') return "This code has a typo the player can't read - the graphic never started.";
+    if(/of null/.test(m)) return "The code reached for an element that isn't on the page - it grabbed nothing.";
+    if(/of undefined/.test(m)) return "The code read a value that was never set.";
+    var nd=m.match(/(\w+) is not defined/);
+    if(nd) return "The code used a name the page doesn't know: "+nd[1]+".";
+    return "The graphic hit a snag and couldn't play.";
+  }
+  function showErr(e){
+    var msg=translateError(e);
+    errEl.textContent=msg; errEl.className='on';
+    parent.postMessage({__gfxError:msg},'*');
+  }
+  function clearErr(){ errEl.className=''; errEl.textContent=''; }
 
   var HOUSE=[
     '#content .gfx{position:absolute;left:120px;bottom:120px;background:#0a3d91;',
@@ -222,6 +267,7 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
   function loadTemplate(spec){
     gsap.killAll();
     stage.classList.remove('on');
+    clearErr();
     handlers={play:null,stop:null,update:null,next:null};
     // reset per-element gsap state by rebuilding content
     var useHouse = (spec.house!=null)?spec.house:!spec.css;
@@ -239,6 +285,13 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
       if(!/\.(png|jpg|jpeg|svg)$/i.test(s)) im.classList.add('broken');
     });
     overlay.className = spec.overlay||'';
+    // coordinate marker + (x, y) readout
+    if(spec.marker && spec.marker.x!=null){
+      marker.style.left=spec.marker.x+'px'; marker.style.top=spec.marker.y+'px';
+      markerRd.textContent = (spec.marker.label!=null)
+        ? spec.marker.label : ('('+spec.marker.x+', '+spec.marker.y+')');
+      marker.className='on';
+    } else { marker.className=''; }
     frame.className = (spec.mode==='transparent')?'transparent':'video';
     if(spec.js){
       try{
@@ -249,7 +302,7 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
           'next:(typeof next!=="undefined")?next:null};');
         handlers=fn(gsap);
       }catch(e){
-        parent.postMessage({__gfxError:String(e)},'*');
+        showErr(e);
       }
     }
     if(spec.autoplay) cmd('play');
@@ -260,7 +313,7 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
       if(c==='play'){ if(handlers.play) handlers.play(); else stage.classList.add('on'); }
       else if(c==='stop'){ if(handlers.stop) handlers.stop(); else stage.classList.remove('on'); }
       else if(c==='next'){ if(handlers.next) handlers.next(); }
-    }catch(e){ parent.postMessage({__gfxError:String(e)},'*'); }
+    }catch(e){ showErr(e); }
   }
 
   window.addEventListener('message',function(e){
@@ -269,7 +322,7 @@ const APP_RENDERER_SRCDOC = String.raw`<!doctype html>
     else if(d.__gfxCmd) cmd(d.__gfxCmd);
     else if(d.__gfxUpdate){
       try{ if(handlers.update) handlers.update(JSON.stringify(d.__gfxUpdate)); }
-      catch(err){ parent.postMessage({__gfxError:String(err)},'*'); }
+      catch(err){ showErr(err); }
     }
     else if(d.__gfxSet){
       var s=d.__gfxSet;

@@ -123,7 +123,7 @@ COURSE_DATA.push({
           prompt: "Before air the bug must vanish completely. We dial it down to transform: scale(0.1). Look at the corner - is it gone?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0.1); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0.1); }`,
             autoplay: true
           },
           options: [
@@ -132,10 +132,10 @@ COURSE_DATA.push({
             { text: "Yes - 0.1 is close enough to zero.",
               feedback: "Look closer: a speck of gold is still on air. Close enough isn't a broadcast term - nothing is exactly 0." },
             { text: "It slid off screen.",
-              feedback: "Scale never moves the pin - it only resizes. The speck is still sitting at right 40, top 40." }
+              feedback: "Scale never moves the pin - it only resizes. The speck is still sitting at right 96, top 54." }
           ],
           applyOnAnswer: {
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); }`,
             play: true
           }
         },
@@ -144,7 +144,7 @@ COURSE_DATA.push({
           prompt: "Now we set scale(2). What's the risk up in that corner?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(1); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(1); }`,
             overlay: "safe", autoplay: true
           },
           options: [
@@ -156,7 +156,7 @@ COURSE_DATA.push({
               feedback: "Size, not transparency. See-through is opacity's job (4.7)." }
           ],
           applyOnAnswer: {
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(2); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(2); }`,
             play: true
           }
         },
@@ -165,7 +165,7 @@ COURSE_DATA.push({
           prompt: "The bug reads transform: scale(0). A colleague says: 'Someone deleted the bug from the template.' True or false?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); }`,
             autoplay: true
           },
           options: [
@@ -180,8 +180,8 @@ COURSE_DATA.push({
           prompt: "The bug is on air before its cue. Park it ready to pop on air.",
           code: `#bug {
   position: absolute;
-  right: 40px;
-  top: 40px;
+  right: 96px;
+  top: 54px;
   transform: scale({{blank}});
 }`,
           bank: ["0", "1", "2"],
@@ -189,7 +189,7 @@ COURSE_DATA.push({
           slot: "css",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(1); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(1); }`,
             autoplay: true
           },
           success: "Gone - but still pinned, still in the code, ready to enter.",
@@ -442,7 +442,7 @@ COURSE_DATA.push({
           prompt: "The NN bug pops in with scale over 0.3s. Which easing does its transition want? Press PLAY to check your taste.",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); transition: transform 0.3s ease-out; }
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); transition: transform 0.3s ease-out; }
 #stage.on #bug { transform: scale(1); }`
           },
           options: [
@@ -757,22 +757,22 @@ COURSE_DATA.push({
       exercises: [
         {
           type: "predict",
-          prompt: "The bug's pop routine is frozen at its 60% stop. Look at the corner - what size is the bug?",
+          prompt: "The pop routine is frozen at its 60% stop, where transform: scale(1.15). The routine ends at scale(1). Next to where it finally lands, what size is the bug right now?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(1.15); }`,
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(1.15); }`,
             autoplay: true
           },
           options: [
             { text: "A little over full size.", correct: true,
-              feedback: "1.15 - the overshoot. The routine deliberately goes PAST the target, then settles back. That's what makes a pop feel alive. Watch it run at full speed." },
-            { text: "Nothing yet.",
-              feedback: "That's the 0% stop. By 60% the bug has overshot - look: it's slightly too big." },
+              feedback: "Right - 1.15 is bigger than 1. The routine deliberately overshoots PAST the target, then settles back to full size. That overshoot is what makes a pop feel alive. Watch it run at full speed." },
+            { text: "Still smaller than full - not there yet.",
+              feedback: "The other way round: 1.15 is bigger than 1, not smaller. It's mid-overshoot, a touch past full size." },
             { text: "Exactly full size.",
-              feedback: "Full size is where it ENDS (100%). At 60% it's mid-overshoot: 1.15." }
+              feedback: "Full size is scale(1), where it ENDS at 100%. At the 60% stop it's at scale(1.15) - a little past full." }
           ],
           applyOnAnswer: {
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); }
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); }
 @keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
 #stage.on #bug { transform: scale(1); animation-name: pop; animation-duration: 0.4s; }`,
             play: true
@@ -783,7 +783,7 @@ COURSE_DATA.push({
           prompt: "Read the routine cold: pop runs 0% scale(0), 60% scale(1.15), 100% scale(1), with animation-duration: 0.4s. What happens at 60%?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); }
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); }
 @keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
 #stage.on #bug { transform: scale(1); animation-name: pop; animation-duration: 0.4s; }`
           },
@@ -811,7 +811,7 @@ COURSE_DATA.push({
           ],
           slot: "css",
           render: {
-            html: `<div id="bug" style="position:absolute; right:40px; top:40px; background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
+            html: `<div id="bug" style="position:absolute; right:96px; top:54px; background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
             css: "", house: false
           },
           success: "Enter at 0, overshoot at 60, land at 100 - the routine ends where its LAST stop says: exactly scale(1). Press STOP, then PLAY, and watch it settle.",
@@ -875,7 +875,7 @@ COURSE_DATA.push({
           prompt: "Could a TRANSITION alone perform the overshoot-and-settle?",
           render: {
             html: `<div id="bug" style="background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
-            css: `#bug { position: absolute; right: 40px; top: 40px; transform: scale(0); }
+            css: `#bug { position: absolute; right: 96px; top: 54px; transform: scale(0); }
 @keyframes pop { 0% { transform: scale(0); } 60% { transform: scale(1.15); } 100% { transform: scale(1); } }
 #stage.on #bug { transform: scale(1); animation-name: pop; animation-duration: 0.4s; }`
           },
@@ -994,7 +994,7 @@ COURSE_DATA.push({
           ],
           slot: "css",
           render: {
-            html: `<div id="bug" style="position:absolute; right:40px; top:40px; background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
+            html: `<div id="bug" style="position:absolute; right:96px; top:54px; background-color:#e8b90c; color:#0a2a5e; font-family:Arial,sans-serif; font-size:44px; font-weight:700; padding:10px 18px; border-radius:6px;">NN</div>`,
             css: "", house: false
           },
           success: "Settled at scale(1). Press STOP, then PLAY again - overshoot-and-settle, the pop that feels alive.",

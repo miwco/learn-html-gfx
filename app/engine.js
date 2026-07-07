@@ -47,8 +47,9 @@ window.addEventListener('message', function (e) {
     const w = probeWaiters[d.__gfxProbeResult.id];
     if (w) { delete probeWaiters[d.__gfxProbeResult.id]; w(d.__gfxProbeResult.results); }
   } else if (d.__gfxError) {
-    // template JS errors surface as a friendly overlay note, never a raw crash
-    nudge('The template hit an error: ' + d.__gfxError);
+    // The stage shows its own plain-language on-air note; just log here so a stage
+    // error never overwrites the exercise's own authored feedback.
+    console.warn('[stage] ' + d.__gfxError);
   }
 });
 function post(msg) { frame.contentWindow.postMessage(msg, '*'); }
@@ -176,8 +177,8 @@ function renderExercise() {
   viewMode = r.mode || 'video';
   btnView.textContent = viewMode === 'transparent' ? 'Over video' : 'Transparency';
   loadStage({ html: r.html || '', css: r.css || '', js: r.js || '',
-              house: r.house, kind: r.kind, mode: viewMode, overlay: r.overlay || '',
-              autoplay: !!r.autoplay });
+              house: r.house, kind: r.kind, marker: r.marker, mode: viewMode,
+              overlay: r.overlay || '', autoplay: !!r.autoplay });
   btnNext.style.display = (r.js && r.js.indexOf('next') >= 0) ? '' : 'none';
 
   (TYPES[ex.type] || TYPES.predict)(ex);
@@ -267,6 +268,7 @@ const TYPES = {
             patchStage({ html: p.html != null ? p.html : currentSpec.html,
                          css: p.css != null ? p.css : currentSpec.css,
                          js: p.js != null ? p.js : currentSpec.js,
+                         marker: p.marker != null ? p.marker : currentSpec.marker,
                          autoplay: p.play !== false });
           }
           markAnswer(true); win(o.feedback);
@@ -299,7 +301,8 @@ const TYPES = {
         }
         if (chip === ex.answer) {
           c.classList.add('right'); markAnswer(true);
-          win(ex.success || 'Right - and the graphic followed your choice live.');
+          win(ex.success || (ex.slot ? 'Right - and the graphic followed your choice live.'
+                                     : 'Right - that\'s the one.'));
         } else {
           c.classList.add('wrong'); markAnswer(false);
           setTimeout(function () {
@@ -330,7 +333,8 @@ const TYPES = {
               { autoplay: ex.fixedRender.play !== false }));
           }
           markAnswer(true);
-          win(ex.success || 'Fixed - watch the graphic recover.');
+          win(ex.success || (ex.fixedRender ? 'Fixed - watch the graphic recover.'
+                                            : 'Fixed - that\'s the one.'));
         } else {
           t.classList.add('wrong');
           setTimeout(() => t.classList.remove('wrong'), 600);
@@ -365,7 +369,8 @@ const TYPES = {
           patchStage(Object.assign(patch, { autoplay: true }));
         }
         markAnswer(true);
-        win(ex.success || 'Assembled - and it plays.');
+        win(ex.success || (ex.slot ? 'Assembled - and it plays.'
+                                   : 'Assembled - that\'s the right order.'));
       } else {
         markAnswer(false);
         nudge((ex.feedback && ex.feedback.default) ||

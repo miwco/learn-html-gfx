@@ -92,7 +92,8 @@ Unit 8 shows the switch"):**
 - 8.1 the four-landmark skim (definition/body/styles/functions)
 - 8.2 CSS variables `:root { --accent }` + `var(--accent)`
 - 8.3 `@font-face` (recognize-and-edit)
-- 8.4 `classList.add`/`remove`
+- 8.4 `classList.add`/`remove`; `if/else` + `==` introduced here as a read-only
+  preview (the day-night checkbox decision), written for real in 9.2
 - 8.5 `element.style.<camelCase>` + the `color` ftype
 - 8.6 `steps` >= 2 + `next()` (Continue)
 - 8.7 the four-suspect debugging method
@@ -124,6 +125,12 @@ Unit 8 shows the switch"):**
 - **Brand colors:** primary `#0a3d91` (blue), accent `#e8b90c` (amber).
 - **Ids:** strap wrapper `#strap`; lines `name`/`title` until the 7.7 migration, then
   `f0`/`f1`; corner bug `#bug`; logo file `nn-logo.png`.
+- **Corner-bug pin:** the bug lives in the title-safe corner at `right: 96px; top: 54px`
+  everywhere (taught 4.5; the house renderer's `kind:"bug"` uses the same). Never 40/40.
+- **Stage affordances (app, not template code):** the coordinate readout marker
+  (`render.marker:{x,y}` -> crosshair + `(x, y)` label, Unit 4) and the plain-language
+  on-air error note (auto-shown when template JS throws, Unit 7+) are provided by the
+  player; prompts may reference them but students never write them.
 - **SPX facts:** classic-globals dialect (play/stop/update(JSON string)/next); definition
   last in `<head>`; first two DataFields = rundown preview; steps>=2 enables Continue/next();
   out = manual/none/ms; ftypes textfield/dropdown+items/number/checkbox("0"/"1")/textarea/color.

@@ -129,7 +129,7 @@ COURSE_DATA.push({
         },
         {
           type: "predict",
-          prompt: "Press PLAY and watch the strap come in. Then tap the button that takes it off air.",
+          prompt: "You press PLAY on the stage and the strap comes in. Which button takes it back off air - PLAY or STOP?",
           render: { html: "<div>Maria Kranz</div><div>News Anchor</div>" },
           options: [
             { text: "STOP", correct: true,
@@ -203,8 +203,20 @@ COURSE_DATA.push({
         },
         {
           type: "predict",
-          prompt: "Three placements of the same strap: floating mid-frame, sitting in the lower area, stretched full width. Which one looks like a real lower third?",
-          render: { html: "<div>Maria Kranz</div><div>News Anchor</div>", autoplay: true },
+          prompt: "The same strap, dropped in three places at once: floating mid-frame, sitting in the lower area, stretched full width. Which one looks like a real lower third?",
+          render: {
+            house: false, autoplay: true, mode: "video",
+            html: '<div class="ph mid"><div>Maria Kranz</div><div>News Anchor</div></div>' +
+                  '<div class="ph low"><div>Maria Kranz</div><div>News Anchor</div></div>' +
+                  '<div class="ph wide"><div>Maria Kranz</div><div>News Anchor</div></div>',
+            css: '.ph{position:absolute;background:#0a3d91;padding:16px 28px;border-radius:4px;' +
+                 'box-shadow:0 8px 24px rgba(0,0,0,.4);}' +
+                 '.ph div{color:#fff;font-size:38px;font-weight:700;line-height:1.15;}' +
+                 '.ph div + div{font-size:24px;font-weight:400;color:#dbe4f5;margin-top:5px;}' +
+                 '.mid{left:660px;top:420px;}' +
+                 '.low{left:120px;bottom:130px;}' +
+                 '.wide{left:0;right:0;bottom:0;border-radius:0;text-align:center;}'
+          },
           options: [
             { text: "Sitting in the lower area.", correct: true,
               feedback: "That's the spot that named it. Unit 4 teaches exactly where - and why." },
@@ -248,7 +260,7 @@ COURSE_DATA.push({
         },
         {
           type: "fix",
-          prompt: "The strap's second line has vanished: the 'Sports Tonight' element never ends, so it swallowed the line after it. Tap the tag that's wrong.",
+          prompt: "'Tomas Berg' is still on screen, but it came up as a big heading, not the small second line: the 'Sports Tonight' element never closes, so it swallowed the line after it. Tap the tag that's wrong.",
           render: { html: "<div>Sports Tonight<div>\n<div>Tomas Berg</div>", autoplay: true },
           tokens: ["<div>", "Sports Tonight", "<div>", "<div>", "Tomas Berg", "</div>"],
           answer: 2,
@@ -341,11 +353,11 @@ COURSE_DATA.push({
         },
         {
           type: "predict",
-          prompt: "Maria Kranz sits unstyled in the corner, outside the strap. The code reads <div></div>Maria Kranz. What happened?",
+          prompt: "The strap's line came up empty, and 'Maria Kranz' shows as small plain text with no styling. The code reads <div></div>Maria Kranz. What happened?",
           render: { html: "<div></div>Maria Kranz", autoplay: true },
           options: [
-            { text: "The text sits outside the tags, so the strap's box is empty.", correct: true,
-              feedback: "Watch: back between the tags, the name gets its strap back. Content belongs between opening and closing tag." },
+            { text: "The name sits outside the tags, so the element between them holds nothing.", correct: true,
+              feedback: "Right - and watch: moved back between the tags, the name fills the strap and gets its styling. Content belongs between the opening and closing tag." },
             { text: "The name is spelled wrong.",
               feedback: "Spelling is fine - position isn't. Where does content belong relative to the tags?" },
             { text: "PLAY wasn't pressed.",

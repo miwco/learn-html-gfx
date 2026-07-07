@@ -446,6 +446,19 @@ window.COURSE_DATA = window.COURSE_DATA || [];
               { text: "GSAP.",
                 feedback: "In Unit 6 templates, yes - but Unit 5 had no JS you'd met. Its CSS transitions fired when a class arrived. classList was the finger on the switch." }
             ]
+          },
+          {
+            type: "predict",
+            prompt: "A first look ahead. Soon a 'Night mode' checkbox will arrive as d.f3 - either \"1\" (ticked) or \"0\". This decides the switch:\n  if (d.f3 == \"1\") { panel.classList.add(\"night\"); }\n  else { panel.classList.remove(\"night\"); }\nWith the box ticked (\"1\"), which line runs?",
+            render: { html: SKY_HTML, css: SKY_CSS, autoplay: true },
+            options: [
+              { text: "The add line - night goes on, and the panel flips to its night look.", correct: true,
+                feedback: "That's an if/else. == checks the value; a true test runs the if block, anything else runs the else. You'll write these in Unit 9 - here you're just meeting the shape." },
+              { text: "Both lines run, one after the other.",
+                feedback: "Only one branch ever runs: if the == test is true, the if line; otherwise the else line. Never both." },
+              { text: "Neither, until PLAY is pressed.",
+                feedback: "This runs the moment the operator toggles the box (an update), not on PLAY. The == test picks which single line fires." }
+            ]
           }
         ]
       },
@@ -457,7 +470,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
         exercises: [
           {
             type: "operate",
-            prompt: "Field f2 is a color field - its value rides the same pipeline as any text. The producer wants a deep red badge for the crime segment: type #e02020 into Strap colour, press Update, then Play.",
+            prompt: "Field f2 is a color field - its value rides the same pipeline as any text. The producer wants a bold red badge to flag today's featured bake: type #e02020 into Strap colour, press Update, then Play.",
             render: { html: ML_HTML, css: ML_CSS, js: ML85_JS, autoplay: true },
             panel: [
               { id: "f0", label: "Host", value: "Elif Demir", expect: "Elif Demir" },
@@ -468,7 +481,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
               { sel: "#ml_badge", style: { backgroundColor: "rgb(224, 32, 32)" } },
               { sel: "#f0", text: "Elif Demir" }
             ],
-            successFeedback: "The color arrived through update() like every field - same pipeline, different ftype - and landed on .style, not .textContent.",
+            successFeedback: "The color arrived through update() like every field - same pipeline, different ftype - and landed on .style, not .textContent. One quirk: the browser stores a colour as rgba(...), so your #e02020 reads back as rgba(224, 32, 32, 1).",
             feedback: { default: "The badge isn't red yet. Type #e02020 (hash included) into Strap colour, press Update, then Play." }
           },
           {
@@ -486,9 +499,10 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           {
             type: "fix",
             prompt: "The badge ignores the operator's color - and this time the app shows a LOUD red error. For once, the machine complained. Fix the line.",
-            render: { html: ML_HTML, css: ML_CSS, js: ML85_JS, autoplay: true },
+            render: { html: ML_HTML, css: ML_CSS, js: ML85_JS.replace(".style.backgroundColor = d.f2", ".style.background-color = d.f2"), autoplay: true },
             tokens: ['document.getElementById("ml_badge")', '.style.', 'background-color', ' = d.f2;'],
             answer: 2, fixedToken: "backgroundColor",
+            fixedRender: { js: ML85_JS, play: true },
             success: "JS read background-color as 'background minus color' - a loud syntax error, for once. Hyphens become capitals.",
             feedback: {
               3: "The value is fine - the error points at the property name. JS read background-color as 'background minus color'.",
@@ -557,19 +571,19 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           },
           {
             type: "fill",
-            prompt: "A sports podium graphic reveals bronze, then silver, then gold: three phases. Complete the definition.",
+            prompt: "The Election full-screen reveals its first result, then the second, then the third: three phases. Complete the definition.",
             render: { html: ELECT_HTML, css: ELECT_CSS, js: ELECT_JS, autoplay: false },
-            code: 'window.SPXGCTemplateDefinition = {\n  "description": "Podium reveal",\n  "steps": "{{blank}}",\n  "DataFields": [ ... ]\n};',
+            code: 'window.SPXGCTemplateDefinition = {\n  "description": "Election reveal",\n  "steps": "{{blank}}",\n  "DataFields": [ ... ]\n};',
             bank: ["3", "2", "1"],
             answer: "3",
             feedback: {
-              "2": "Count ALL phases including the arrival: bronze arrives with play(), then two Continues. Three steps.",
-              "1": "One step means no Continue at all - the whole podium would land at once."
+              "2": "Count ALL phases including the arrival: the first result arrives with play(), then two Continues. Three steps.",
+              "1": "One step means no Continue at all - the whole reveal would land at once."
             }
           },
           {
             type: "predict", kernel: true,
-            prompt: "The operator's button log on a three-step podium reads: PLAY, CONTINUE, CONTINUE, STOP. Which functions ran, in order?",
+            prompt: "The operator's button log on a three-step Election reveal reads: PLAY, CONTINUE, CONTINUE, STOP. Which functions ran, in order?",
             render: { html: ELECT_HTML, css: ELECT_CSS, js: ELECT_JS, autoplay: false },
             options: [
               { text: "play() -> next() -> next() -> stop()", correct: true,
@@ -649,7 +663,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
             fixedRender: { js: ARENA_JS },
             success: "Both boxes were drinking from f2. The element was right; the FIELD feeding it was wrong.",
             feedback: {
-              2: "The element is right - f3's box updates, you can see it flash. It's being fed the wrong FIELD: read what's on the right of the equals sign.",
+              2: "The element is right - getElementById(\"f3\") hits f3 exactly. The bug is the FIELD it's fed: read what's on the right of the equals sign.",
               default: "Read each line as element = field. One element is being fed another element's field."
             }
           },
@@ -836,7 +850,11 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           {
             type: "fill",
             prompt: "Ticket 2 - swap the logo to the NN mark. The asset drawer lists nn-logo.png at the ROOT of the template folder (not inside logo/). Point the img at it.",
-            render: { html: CL_HTML, css: CL_CSS_NN, js: CL_JS_SLOW, autoplay: true },
+            render: {
+              html: CL_HTML.replace('<div id="lt_panel">', '<div id="lt_panel"><img id="lt_logo" src="logo/nn-logo.png">'),
+              css: CL_CSS_NN + '\n#lt_logo{display:inline-block;width:54px;height:54px;margin:0 0 8px;border-radius:8px;background:linear-gradient(135deg,#e8b90c,#b8860b);}',
+              js: CL_JS_SLOW, autoplay: true
+            },
             code: '<img id="lt_logo" src="{{blank}}">',
             bank: ["nn-logo.png", "logo/nn-logo.png", "NN Logo"],
             answer: "nn-logo.png",

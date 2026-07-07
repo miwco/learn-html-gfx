@@ -96,7 +96,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
     '#crawl { color: #ffffff; font-family: Arial, sans-serif; font-size: 30px; white-space: nowrap; animation: crawl 18s linear infinite; }',
     '@keyframes crawl {',
     '  from { transform: translateX(1920px); }',
-    '  to { transform: translateX(-100%); }',
+    '  to { transform: translateX(-1920px); }',
     '}'
   ].join('\n');
   var TICK_HTML = '<div id="bar"><div id="crawl">+++ STORM WARNING +++ DERBY TONIGHT +++</div></div>';
@@ -260,7 +260,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           },
           {
             type: "fix", kernel: true,
-            prompt: "The panel's 'Show logo' checkbox is ticked, but the logo is gone; untick it and the logo appears. Checked means SHOW. Read the logic and fix it.",
+            prompt: "QA reports a backwards checkbox: with 'Show logo' ticked the logo hides, and unticking it makes the logo appear. Checked should mean SHOW. Read the logic and fix it.",
             render: { html: NN92_HTML, css: NN92_CSS, js: NN92_BROKEN_JS, autoplay: true },
             tokens: ['if (d.f3 == "1")', '{ logo.classList.add("hidden"); }', 'else', '{ logo.classList.remove("hidden"); }'],
             answer: 0, fixedToken: 'if (d.f3 == "0")',
@@ -351,7 +351,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           },
           {
             type: "operate", kernel: true,
-            prompt: "Delivery check. The rundown card reads: James Okafor, Political Correspondent. Fill the panel, Update, Play - then Stop and Play again: it must run clean twice.",
+            prompt: "Delivery check. The rundown card reads: James Okafor, Political Correspondent. Fill the panel, Update, Play - it must deliver clean on the first play. Then Stop and Play again to watch it re-enter just as cleanly.",
             render: { html: NN_HTML, css: NN_CSS, js: NN_JS, autoplay: false },
             panel: [
               { id: "f0", label: "Name", value: "", expect: "James Okafor" },
@@ -386,7 +386,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
             type: "fill",
             prompt: "Stage 2 - the idle. The brief says breathing 'felt, not seen'. Set the peak of the loop - then watch it breathe.",
             render: { html: BUG_HTML, css: BUG_CSS, js: BUG_JS, autoplay: true },
-            code: '#bug { position: absolute; top: 54px; right: 96px; opacity: 0; font-family: Arial, sans-serif; text-align: center; }\n#logo { width: 110px; height: 110px; margin: 0 auto; background: linear-gradient(135deg, #e8b90c, #b8860b); border-radius: 12px; color: #0a2a5e; font-size: 44px; font-weight: 700; line-height: 110px; animation: breathe 4s ease-in-out infinite; }\n@keyframes breathe {\n  0% { transform: scale(1); }\n  50% { transform: scale({{blank}}); }\n  100% { transform: scale(1); }\n}\n#f0 { color: #ffffff; font-size: 20px; margin-top: 8px; transition: opacity 0.3s; }\n.hidden { opacity: 0; }',
+            code: '/* the #bug and #logo box styling below is given boilerplate - your line lives in @keyframes breathe */\n#bug { position: absolute; top: 54px; right: 96px; opacity: 0; font-family: Arial, sans-serif; text-align: center; }\n#logo { width: 110px; height: 110px; margin: 0 auto; background: linear-gradient(135deg, #e8b90c, #b8860b); border-radius: 12px; color: #0a2a5e; font-size: 44px; font-weight: 700; line-height: 110px; animation: breathe 4s ease-in-out infinite; }\n@keyframes breathe {\n  0% { transform: scale(1); }\n  50% { transform: scale({{blank}}); }\n  100% { transform: scale(1); }\n}\n#f0 { color: #ffffff; font-size: 20px; margin-top: 8px; transition: opacity 0.3s; }\n.hidden { opacity: 0; }',
             bank: ["1.03", "1.4", "1"],
             answer: "1.03", slot: "css",
             success: "Under 1.05: it's a bug, not a beacon. And note the loop lives on the LOGO while play() flies the WRAPPER - two drivers, two steering wheels.",
@@ -510,7 +510,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
               { sel: "#f1", text: "KORHONEN WINS" },
               { sel: "#panel", style: { backgroundColor: "rgb(138, 21, 38)" } }
             ],
-            successFeedback: "Capstone C delivered: full coverage, title-safe text, dropdown color on the panel via .style, and the Play -> Continue -> Stop cycle running clean.",
+            successFeedback: "Capstone C delivered: full coverage, title-safe text, dropdown color on the panel via .style. Now press CONTINUE to reveal the subtitle, then STOP to clear - the full cycle is yours to run.",
             feedback: { default: "Not matching yet: Subtitle must read KORHONEN WINS and the panel color #8a1526. Update first, then Play." }
           }
         ]
@@ -535,7 +535,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
             type: "fill",
             prompt: "Stage 2 - the loop's tempo curve. Watch the crawl as you choose.",
             render: { html: TICK_HTML, css: TICK_CSS, js: TICK_JS, autoplay: true },
-            code: '#bar { position: absolute; left: 0; right: 0; bottom: 0; background-color: #0a3d91; padding: 16px 0; opacity: 0; }\n#crawl { color: #ffffff; font-family: Arial, sans-serif; font-size: 30px; white-space: nowrap; animation: crawl 18s {{blank}} infinite; }\n@keyframes crawl {\n  from { transform: translateX(1920px); }\n  to { transform: translateX(-100%); }\n}',
+            code: '#bar { position: absolute; left: 0; right: 0; bottom: 0; background-color: #0a3d91; padding: 16px 0; opacity: 0; }\n#crawl { color: #ffffff; font-family: Arial, sans-serif; font-size: 30px; white-space: nowrap; animation: crawl 18s {{blank}} infinite; }\n@keyframes crawl {\n  from { transform: translateX(1920px); }\n  to { transform: translateX(-1920px); }\n}',
             bank: ["linear", "ease-in-out", "power2.out"],
             answer: "linear", slot: "css",
             success: "A crawl runs linear - constant speed, about two words a second past a fixed point at this size. The 18s duration keeps it readable; infinite keeps it going.",

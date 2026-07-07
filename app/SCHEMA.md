@@ -51,9 +51,26 @@ render: {
                                     // (the house stylesheet is always available).
   mode: "video" | "transparent",  // program feed vs checkerboard (default video)
   autoplay: true,                   // play the graphic in on load
-  overlay: "grid" | "safe" | null // coordinate grid / title-safe overlay
+  overlay: "grid" | "safe" | null, // coordinate grid / title-safe overlay
+  marker: { x: 120, y: 860, label? } // draw a crosshair at stage px (x, y) with an
+                                    // (x, y) readout (label overrides the text). Used
+                                    // by Unit 4 positioning. Persists across patches
+                                    // and can be set/moved from applyOnAnswer.
 }
 ```
+
+**On-air error note:** if a template's JS throws (syntax error, a grab that returns
+null, a read off undefined, an unknown name), the stage shows a plain-language red note
+(e.g. "The code reached for an element that isn't on the page - it grabbed nothing.")
+instead of raw JS jargon, and the app logs it rather than overwriting the exercise's
+feedback. It clears on the next clean load. Author error-demo prompts to reference this
+note; don't quote a message the translator doesn't produce.
+
+**Honest default successes:** for `fill`/`fix`/`arrange`, the engine only claims a live
+on-stage change ("the graphic followed your choice live") when the exercise actually
+re-renders (`slot` set, or `fixedRender` present). A no-slot fill with no `success`
+gets a neutral "Right - that's the one." Give no-slot exercises a tailored `success`
+that states the *invisible* result.
 
 PLAY behavior on the stage: if the template JS defines a global `play()`, PLAY calls
 it (and STOP calls `stop()`); otherwise PLAY toggles the `on` class on the stage

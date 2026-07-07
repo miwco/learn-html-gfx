@@ -155,3 +155,36 @@ kind's exact geometry through the real renderer.
 already match their prompts). Post-fix: validator 0/0, exercise count unchanged at
 425/425, and an automated named-vs-shown scan across all house-mode renders is clean
 (the one remaining hit, 1.2 ex3, is the reviewed Unit-0 recall question above).
+
+## Beginner play-through pass (Units 1-9)
+
+A deeper multi-agent play-through (two lenses per unit, each finding adversarially
+verified) surfaced 43 confusing spots beyond graphic-type mismatches - see
+`BEGINNER-REVIEW.md` for the full ranked list. All 43 were fixed, plus the missing
+affordances they wanted were built rather than worded around:
+
+**New player features (engine.js / renderer.js):**
+- Coordinate **marker + `(x, y)` readout** (`render.marker`) - Unit 4 now shows a real
+  crosshair/readout at any stage px instead of prompts naming a readout that didn't exist.
+- Plain-language **on-air error note** - template JS throws now surface a friendly red
+  stage note (null grab / undefined read / syntax typo / unknown name) instead of raw
+  JS jargon; the app logs the error rather than overwriting authored feedback.
+- **Honest default successes** - `fill`/`fix`/`arrange` only claim a live change when the
+  stage actually re-renders (`slot`/`fixedRender`); no-slot exercises get tailored copy.
+
+**Systemic content fixes:**
+- **House-mode "escape/unstyled" prompts reworded to structural** (1.4, 1.5, 2.1, 2.3,
+  2.4) - the stage can't detach a line from the strap, so prompts no longer promise a
+  break the render can't show.
+- **Corner-bug pin swept 40/40 -> 96/54 across Unit 5**, restoring 4.5's title-safe
+  lesson and 5.2's "scaling breaks it out" cause-and-effect.
+- **Untaught tokens sealed / prefaced:** `if/else`+`==` get a read-only preview at 8.4
+  before 9.2 writes them (concept-ledger updated); `var` pulled back a lesson; GSAP
+  "tween" glossed at 6.6; `translateX(-100%)` -> `-1920px`; decorative box CSS sealed.
+- **False "watch it happen" removed** where the stage shows no difference - notably the
+  `textContent = undefined` blanks-vs-prints premise (7.6), and graders that fired before
+  the asked Continue/Stop (9.3, 9.5).
+
+Post-fix: validator **0 problems / 0 warnings**; exercise count **426** (the one new 8.4
+if/else preview); marker + error-overlay + all rebuilt renders verified through the real
+renderer.

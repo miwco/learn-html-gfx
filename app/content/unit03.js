@@ -417,11 +417,11 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           },
           {
             type: "predict", kernel: true,
-            prompt: "The playout machine doesn't have Archivo installed. What does font-family: Archivo, sans-serif; show on air?",
+            prompt: "We're about to switch the strap to font-family: Archivo, sans-serif - but the playout machine doesn't have Archivo. When we do, what shows on air?",
             render: { html: "<style>#panel{position:absolute;left:120px;top:860px;font-size:44px;background-color:#0a3d91;color:#ffffff;}</style>" + PANEL_MARKUP, css: ".line { font-family: Georgia, serif; }", house: false, mode: "video", autoplay: true },
             options: [
               { text: "The next name on the list - a standard sans-serif face.", correct: true,
-                feedback: "That's the whole point of the list: the show goes on, in the nearest safe face - close, not identical." },
+                feedback: "Right - watch it flip to a plain sans-serif face. The machine walks the list left to right and uses the first font it owns: the show goes on, close but not identical." },
               { text: "Nothing - the text disappears.",
                 feedback: "Text never vanishes over a missing font - the list exists exactly for this. The machine walks it left to right and uses the first face it owns." },
               { text: "Both fonts mixed together.",
@@ -475,7 +475,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
         exercises: [
           {
             type: "predict",
-            prompt: "The title has been set to font-size: 12px - look for it on the stage. The card says 28px, and everything under 24px is in the red zone. Why is the red zone red?",
+            prompt: "The title is set to font-size: 12px - find it on the stage, dwarfed by the 44px name. The card asks for 28px because broadcast type has a minimum readable size. Why does TV need that minimum?",
             render: { html: "<style>#panel{position:absolute;left:120px;top:860px;font-family:Arial,sans-serif;background-color:#0a3d91;color:#ffffff;}</style>" + PANEL_MARKUP, css: "#name { font-size: 44px; font-weight: bold; }\n#title { font-size: 12px; }", house: false, mode: "video", autoplay: true },
             options: [
               { text: "TV is read from across a room - broadcast type has a minimum size.", correct: true,

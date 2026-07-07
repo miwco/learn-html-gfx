@@ -68,7 +68,7 @@
           },
           {
             type: "predict", kernel: true,
-            prompt: "The line gsap.to(\"#strap\", { x: 200 }) sits written in the strip. RUN has not been pressed. What is the strap doing right now?",
+            prompt: "The line gsap.to(\"#strap\", { x: 200 }) is written, but it hasn't run yet. What is the strap doing right now?",
             render: { html: HTMLB, css: BUGCSS, mode: "video" },
             options: [
               { text: "Nothing - a call is an instruction, and instructions happen only when they run.", correct: true,
@@ -76,7 +76,7 @@
               { text: "It has already moved 200 pixels right.",
                 feedback: "The line existing changes nothing. CSS is; JavaScript does - and it does it when the line runs. Look: the strap sits at home." },
               { text: "It is drifting right slowly on its own.",
-                feedback: "There's no halfway state. Before RUN: nothing. After RUN: the move. The call is an action, not a description." }
+                feedback: "There's no halfway state. Before it runs: nothing. After it runs: the move. The call is an action, not a description." }
             ]
           },
           {
@@ -219,7 +219,7 @@
           },
           {
             type: "predict", kernel: true,
-            prompt: "A colleague's ENTRANCE tween says ease: \"power2.in\". It just replayed on stage. How will it feel on air?",
+            prompt: "A colleague's ENTRANCE animation says ease: \"power2.in\". It just replayed on stage. How will it feel on air?",
             render: { html: HTML, css: CSS, mode: "video", autoplay: true,
               js: 'function play() { gsap.fromTo("#strap", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, ease: "power2.in" }) }' },
             options: [
@@ -297,7 +297,7 @@
       {
         id: "6.4", title: "Enter from off-screen",
         concept: "gsap.from flips the arrow: the settings are the STARTING line; the element travels home to its CSS look.",
-        explain: "gsap.to animates TO the settings. gsap.from flips the arrow: the settings are the starting line, and the element travels home - to the position and look your CSS already gives it. That's the standard entrance idiom: CSS owns the resting look, the tween owns the journey.",
+        explain: "gsap.to animates TO the settings. gsap.from flips the arrow: the settings are the starting line, and the element travels home - to the position and look your CSS already gives it. That's the standard entrance idiom: CSS owns the resting look, the animation owns the journey.",
         exercises: [
           {
             type: "predict",
@@ -449,7 +449,7 @@
       {
         id: "6.6", title: "The timeline",
         concept: "gsap.timeline() plus chained .to calls: a queue of tweens, run in written order - the whole entrance as one object.",
-        explain: "One tween moves one thing. A whole entrance is several moves in a row - so GSAP gives you a timeline: gsap.timeline() starts the sequence, each chained .to adds the next move to the queue. Out of the box they run one after another, in the order written.",
+        explain: "For a sequenced entrance the strap now wraps an inner #panel, and the blue background moves onto that panel - so the whole card slides in as one, then each line fades up inside it. One tween (GSAP's word for a single animation) moves one thing; a whole entrance is several moves in a row. So GSAP gives you a timeline: gsap.timeline() starts the sequence, and each chained .to adds the next move to the queue. Out of the box they run one after another, in the order written.",
         exercises: [
           {
             type: "observe",
@@ -606,7 +606,7 @@
           },
           {
             type: "predict",
-            prompt: "The ticker's three headlines, one call: gsap.from(\".headline\", { y: 20, opacity: 0, duration: 0.3, ease: \"power2.out\", stagger: 0.1 }). What does stagger: 0.1 do?",
+            prompt: "A headlines panel - three stacked lines, one call: gsap.from(\".headline\", { y: 20, opacity: 0, duration: 0.3, ease: \"power2.out\", stagger: 0.1 }). What does stagger: 0.1 do?",
             render: {
               html: '<div id="strap"><div class="headline line">HIFK 3 - 2 TPS</div><div class="headline line">STORM WARNING FOR THE WEEKEND</div><div class="headline line">ELECTION DEBATE TONIGHT 21:00</div></div>',
               css: '#strap { position: absolute; left: 120px; top: 760px; background-color: #0a3d91; padding: 22px 34px; } .line { color: #ffffff; font-size: 36px; font-weight: 700; font-family: Arial, sans-serif; }',

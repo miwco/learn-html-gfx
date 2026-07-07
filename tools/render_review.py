@@ -26,6 +26,7 @@ DOCS = [
     ("gamification-plan.md", "Gamification"),
     ("app-product-outline.md", "Product outline"),
     ("AUDIT.md", "Consistency audit"),
+    ("BEGINNER-REVIEW.md", "Beginner review"),
     ("app/README.md", "The app"),
     ("mvp/README.md", "MVP"),
 ]

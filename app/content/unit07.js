@@ -84,7 +84,7 @@
           },
           {
             type: "predict",
-            prompt: "A third button has appeared on the stage: NEXT - your button. The app wired nothing but a call to flash(). Press it. Press it again. What does the button do?",
+            prompt: "A third button, CONTINUE, is now on the stage, wired to run flash(). Press it. Press it again. What does the button do?",
             render: { html: HTMLB, css: BUGCSS, mode: "video", js: FLASHNEXT },
             options: [
               { text: "It CALLS flash() - and the stored recipe runs.", correct: true,
@@ -227,7 +227,7 @@
         exercises: [
           {
             type: "observe",
-            prompt: "Three grabs ran in the strip: getElementById(\"name\"), then (\"title\"), then (\"bug\"). Tap the LINE whose grip closed on the corner bug - it lights up when you're right.",
+            prompt: "Three grabs ran, one per line: getElementById(\"name\"), then (\"title\"), then (\"bug\"). Tap the LINE whose grip closed on the corner bug - it lights up when you're right.",
             render: { html: HTMLB, css: BUGCSS, mode: "video" },
             lines: [
               'document.getElementById("name")',
@@ -263,7 +263,7 @@
             code: 'document.getElementById("{{blank}}")',
             bank: ["bug", "#bug", "NN", "div"],
             answer: "bug",
-            success: "One id, one element, one grip - the bug is held.",
+            success: "One id, one element, one grip - getElementById now points at exactly the bug. Nothing moves yet: grabbing is only step one.",
             feedback: {
               "#bug": "No hash here - that's how CSS marks an id. getElementById already knows it's getting an id: the name goes in alone.",
               "NN": "That's the text the bug SHOWS on screen. Elements are grabbed by their id, not their content.",
@@ -349,7 +349,7 @@
           },
           {
             type: "fix",
-            prompt: "The strip errors - the overlay says you're assigning to the element itself. Something is missing between the grab and the =. Tap the piece that needs it.",
+            prompt: "The strap threw an error - the player couldn't run this line. You can't hand words straight to a whole element; something is missing between the grab and the =. Tap the piece that needs it.",
             render: { html: HTML, css: CSS, mode: "video",
               js: 'document.getElementById("name") = "Alexandra Rivera";' },
             tokens: ['document.getElementById("name")', '=', '"Alexandra Rivera";'],
@@ -388,7 +388,7 @@
         exercises: [
           {
             type: "predict",
-            prompt: "The bundle: data = { f0: \"Maria Kranz\", f1: \"News Anchor\" }. You run data.f0 in the strip. What comes out?",
+            prompt: "The bundle: data = { f0: \"Maria Kranz\", f1: \"News Anchor\" }. You read data.f0. What comes out?",
             render: { html: HTML, css: CSS, mode: "video" },
             options: [
               { text: "Maria Kranz", correct: true,
@@ -416,7 +416,7 @@
             type: "fill",
             prompt: "Read the presenter's NAME out of the bundle.",
             render: { html: HTML, css: CSS, mode: "video" },
-            code: 'var data = { f0: "Maria Kranz", f1: "News Anchor" }\ndata.{{blank}}',
+            code: 'data = { f0: "Maria Kranz", f1: "News Anchor" }\ndata.{{blank}}',
             bank: ["f0", "f1", "name", "data"],
             answer: "f0",
             success: "The name hangs off the first tag: f0.",
@@ -428,7 +428,7 @@
           },
           {
             type: "fix", kernel: true,
-            prompt: "This read came back empty - no error, no warning, just nothing. You asked for a tag this bundle doesn't have. Tap the problem, then fix it from the bank.",
+            prompt: "This read came back empty - no error, no warning, just nothing. You asked for a tag this bundle doesn't have. Tap the wrong tag - it snaps to one that exists.",
             render: { html: HTML, css: CSS, mode: "video" },
             tokens: ['data', '.', 'name'],
             answer: 2,
@@ -458,11 +458,11 @@
       {
         id: "7.6", title: "Unpack the delivery",
         concept: "update(data) receives the bundle as a JSON string; JSON.parse(data) opens it into a real object you can read.",
-        explain: "Whenever the operator edits a field, SPX calls your update(data) - the third name in the contract. But the bundle arrives sealed: data is one long piece of text, a JSON string. Text has no tags - data.f0 on the string gives nothing. JSON.parse(data) breaks the seal. Give it a short name - var d = JSON.parse(data); - and read your tags off d. One more habit: d.f0 || \"\" means 'the value, or empty text if the tag is missing' - so a blank field never puts the word undefined on air.",
+        explain: "Whenever the operator edits a field, SPX calls your update(data) - the third name in the contract. But the bundle arrives sealed: data is one long piece of text, a JSON string. Text has no tags - data.f0 on the string gives nothing. JSON.parse(data) breaks the seal. Give it a short name - var d = JSON.parse(data); - and read your tags off d. One more habit: d.f0 || \"\" means 'the value, or empty text if the tag is missing' - a tidy default that keeps a blank field looking blank, and stays safe the moment that value is joined into a longer string.",
         exercises: [
           {
             type: "predict",
-            prompt: "The strip holds data = '{\"f0\":\"Maria Kranz\",\"f1\":\"News Anchor\"}' - wrapped in string quotes, marked SEALED. You run data.f0. What pops out?",
+            prompt: "The bundle arrives as data = '{\"f0\":\"Maria Kranz\",\"f1\":\"News Anchor\"}' - wrapped in string quotes, marked SEALED. You read data.f0. What pops out?",
             render: { html: HTML, css: CSS, mode: "video" },
             options: [
               { text: "Nothing - data is still a string, one piece of text with no tags to read.", correct: true,
@@ -480,9 +480,9 @@
               js: 'function update(data){ document.getElementById("name").textContent = data.f0; }\nfunction play(){ update(JSON.stringify({ f0: "Tomas Berg", f1: "Sports Reporter" })); }' },
             options: [
               { text: "Nothing arrives - a string has no f0 tag, so the read comes back empty.", correct: true,
-                feedback: "Sealed freight: parse first, read second. Always. The strap never changed." },
+                feedback: "Sealed freight: parse first, read second. Always. Watch the name line blank out - reading .f0 off a string gives undefined, which wipes the line to empty." },
               { text: "Tomas Berg, as intended.",
-                feedback: "You ran it - the strap never changed. data.f0 asked a string for a tag it can't have." },
+                feedback: "The opposite - watch the name line blank out. data.f0 asked a string for a tag it can't have, so nothing came back to show." },
               { text: "The whole string, tags and all.",
                 feedback: "Close - that's what writing data alone would show. But data.f0 asks a string for a tag: empty." }
             ]
@@ -494,6 +494,7 @@
             code: 'var d = JSON.{{blank}}(data);',
             bank: ["parse", "open", "read", "f0"],
             answer: "parse",
+            success: "The seal's broken - d is now a real bundle you can read tags off. Nothing shows on air yet; the reading comes next.",
             feedback: {
               "open": "Right idea, wrong spelling - the tool's real name is JSON.parse. Machines don't forgive synonyms any more than typos.",
               "read": "Right idea, wrong spelling - the tool's real name is JSON.parse. Machines don't forgive synonyms any more than typos.",
@@ -502,15 +503,14 @@
           },
           {
             type: "predict",
-            prompt: "The operator leaves Title blank, so the bundle has no f1 value. One title line reads d.f1; the other reads d.f1 || \"\". Press PLAY - which version keeps the word undefined off the air?",
-            render: { html: HTML, css: CSS, mode: "video", js: U76BAD + '\nfunction stop(){}' },
+            prompt: "The operator leaves Title blank, so d.f1 comes back undefined. Setting textContent = d.f1 just blanks the line - so why do pros still write d.f1 || \"\" everywhere?",
+            render: { html: HTML, css: CSS, mode: "video", autoplay: true },
             options: [
-              { text: "The one with || \"\" - 'the value, or failing that, empty text'.", correct: true,
-                feedback: "A blank field should look blank, not like a bug. The safety net is two characters of professionalism." },
-              { text: "The plain d.f1 - blank is blank either way.",
-                feedback: "Look at the strap: plain d.f1 put the literal word undefined on air, in the channel font. || \"\" is what prevents that." }
-            ],
-            applyOnAnswer: { js: U76 + '\nfunction play(){ update(JSON.stringify({ f0: "Maria Kranz" })); }\nfunction stop(){}', play: true }
+              { text: "The moment that value is joined into a string - like \"Live: \" + d.f1 - undefined turns into the literal word on air. || \"\" keeps it clean.", correct: true,
+                feedback: "Exactly. A plain textContent quietly hides an undefined, but string-joining exposes it. || \"\" is two characters of insurance that hold in both places." },
+              { text: "No reason - blank is blank either way.",
+                feedback: "For a plain textContent, true - both blank. But the moment that value is built into a longer string, undefined shows up as literal text. The habit protects you there." }
+            ]
           },
           {
             type: "arrange",
@@ -569,6 +569,7 @@
             code: 'document.getElementById("f0").textContent = d.{{blank}};',
             bank: ["f0", "f1", "name", "\"f0\""],
             answer: "f0",
+            success: "Wired - element f0 now takes field f0, so the operator's Name lands on the top line. You'll watch it play out in the operator drill.",
             feedback: {
               "f1": "That crosses the wires - the second field's value would land in the first element. Same name on both ends: element f0 takes d.f0.",
               "name": "The old id retired this lesson - and the bundle never had a name tag anyway. Fields ship as f0, f1, ...",
@@ -647,6 +648,7 @@
             code: '{ "field": "{{blank}}", "ftype": "textfield", "title": "Title", "value": "News Anchor" }',
             bank: ["f1", "f2", "title", "textfield"],
             answer: "f1",
+            success: "Field f1 defined - the operator's Title field now has a wire reaching the id=\"f1\" line.",
             feedback: {
               "f2": "There's no element id=\"f2\" in this strap - the wire would dangle. The title line's element is f1, so the field is f1.",
               "title": "That's the old Unit 2 id, retired in 7.7. field carries the fN name the handshake runs on.",
@@ -802,6 +804,7 @@
             code: '{ "field": "{{blank}}", "ftype": "textfield", "title": "Name", "value": "Maria Kranz" }',
             bank: ["f0", "f1", "name", "Name"],
             answer: "f0",
+            success: "Name field wired to f0 - it leads the rundown and lands on the top line.",
             feedback: {
               "f1": "f1 is the title line's field. The Name control must carry f0 to reach the top line - and to lead the preview.",
               "name": "The descriptive id retired in 7.7. field carries the fN name: f0.",

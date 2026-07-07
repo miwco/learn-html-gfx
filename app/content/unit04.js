@@ -32,7 +32,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           {
             type: "predict",
             prompt: "The grid overlay is on - crosshairs and an (x, y) readout, yours for the rest of the course. The marker's readout says (960, 540). Which point of the frame is it sitting on?",
-            render: { html: MARKER_STYLE + "<div class=\"marker\" style=\"left:960px;top:540px;\"></div>", css: "", house: false, mode: "video", autoplay: true, overlay: "grid" },
+            render: { marker: { x: 960, y: 540 }, mode: "video", autoplay: true, overlay: "grid" },
             options: [
               { text: "The exact center - half of 1920 across, half of 1080 down.", correct: true,
                 feedback: "Half the width, half the height. The readout always shows (x, y), counted from the top-left corner." },
@@ -84,16 +84,16 @@ window.COURSE_DATA = window.COURSE_DATA || [];
           {
             type: "predict",
             prompt: "The director wants a marker 40 pixels in from the RIGHT edge, vertically centered - the readout should say ( ? , 540). What's the x?",
-            render: { html: MARKER_STYLE, css: "", house: false, mode: "video", autoplay: true, overlay: "grid" },
+            render: { mode: "video", autoplay: true, overlay: "grid" },
             options: [
               { text: "1880", correct: true,
-                feedback: "The right edge sits at x: 1920, so 40 in from it is 1920 - 40 = 1880. Counting backwards from the right is clumsy - lesson 4.3 gives you a better way." },
+                feedback: "The right edge sits at x: 1920, so 40 in from it is 1920 - 40 = 1880 - watch the marker land there, readout and all. Counting backwards from the right is clumsy; lesson 4.3 gives you a better way." },
               { text: "40",
                 feedback: "That's 40 from the LEFT edge - the wrong side of the frame. The right edge sits at x: 1920, so count back from there." },
               { text: "1480",
                 feedback: "That's 440 in from the right. 40 in from the right edge is 1920 - 40 = 1880." }
             ],
-            applyOnAnswer: { html: MARKER_STYLE + "<div class=\"marker\" style=\"left:1880px;top:540px;\"></div>", play: true }
+            applyOnAnswer: { marker: { x: 1880, y: 540 }, play: true }
           }
         ]
       },
@@ -124,7 +124,7 @@ window.COURSE_DATA = window.COURSE_DATA || [];
             bank: ["860", "120", "540", "1920"],
             answer: "860",
             slot: "css",
-            render: { html: STRAP_HTML, css: "", house: false, mode: "video", autoplay: true, overlay: "grid" },
+            render: { html: STRAP_HTML, css: "", house: false, marker: { x: 120, y: 860 }, mode: "video", autoplay: true, overlay: "grid" },
             feedback: {
               "120": "Swapped: top is the y number (down from the top), left is the x number (in from the left). Check the strap against the crosshair readout.",
               "540": "That's the center's y - the readout on the target says 860.",
@@ -486,21 +486,22 @@ window.COURSE_DATA = window.COURSE_DATA || [];
         exercises: [
           {
             type: "predict",
-            prompt: "The strap panel is running over the busiest feed of the course - the HIFK-TPS crowd. Which opacity range keeps the strap readable over it?",
-            render: { html: STRAP_HTML, css: "#strap {\n  position: absolute;\n  top: 860px;\n  left: 120px;\n  opacity: 0.85;\n}", house: false, mode: "video", autoplay: true },
+            prompt: "The strap panel is faint over the busy HIFK-TPS feed - the crowd shows right through the words. Which opacity range would hold the strap readable?",
+            render: { html: STRAP_HTML, css: "#strap {\n  position: absolute;\n  top: 860px;\n  left: 120px;\n  opacity: 0.35;\n}", house: false, mode: "video", autoplay: true },
             options: [
               { text: "Around 0.8-0.9.", correct: true,
-                feedback: "NN's house value is 0.85: the picture breathes, the words hold." },
+                feedback: "NN's house value is 0.85 - watch it firm up: the picture still breathes, but now the words hold." },
               { text: "Around 0.3-0.4.",
-                feedback: "See the crowd through the letters at 0.35? Below about 0.7 a busy feed eats the text. Too thin for air." },
+                feedback: "That's about what you're seeing now - below about 0.7 a busy feed eats the text. Too thin for air." },
               { text: "Exactly 1.0 only.",
                 feedback: "Readable, sure - but a solid slab feels heavy over video. NN trades a little solidity for air. Taste, not law." }
-            ]
+            ],
+            applyOnAnswer: { css: "#strap {\n  position: absolute;\n  top: 860px;\n  left: 120px;\n  opacity: 0.85;\n}", play: true }
           },
           {
             type: "predict", kernel: true,
             prompt: "Two see-through effects in this frame: (A) the area AROUND the strap, where the match shows because nothing is painted there; (B) the strap panel itself, where the match glows through the blue. Which one is opacity?",
-            render: { html: STRAP_HTML, css: "#strap {\n  position: absolute;\n  top: 860px;\n  left: 120px;\n  opacity: 0.85;\n}", house: false, mode: "video", autoplay: true },
+            render: { html: STRAP_HTML, css: "#strap {\n  position: absolute;\n  top: 860px;\n  left: 120px;\n  opacity: 0.7;\n}", house: false, mode: "video", autoplay: true },
             options: [
               { text: "B - the panel.", correct: true,
                 feedback: "Painted, then faded to 0.85. Keying is no-paint; opacity is faded paint." },
