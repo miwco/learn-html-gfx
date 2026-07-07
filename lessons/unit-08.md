@@ -318,6 +318,11 @@ nothing is recognizable from memory.
   element's class, which switches which CSS rules apply. And the reveal: this is
   *exactly* what Unit 5's hidden PLAY machinery did - the last "trust it" seal comes
   off.
+- **Previewed (recognition only):** `if`/`else` and `==` get a first look here, in a
+  read-only preview exercise (ex. 6) built around the day/night checkbox decision -
+  `if (d.f3 == "1") { ... classList.add("night") } else { ... classList.remove("night") }`.
+  The student only reads it and predicts which branch runs; they *write* if/else + ==
+  in Unit 9. This plants the shape before Unit 9 makes them edit it.
 - **Learner-facing explanation:** "JS can put a class on an element and take it off:
   `classList.add("night")`, `classList.remove("night")`. The element doesn't get new
   styles *from* JS - it gets a new *label*, and the CSS rules for that label wake up.
@@ -326,7 +331,7 @@ nothing is recognizable from memory.
 - **Context:** the SKYWATCH weather panel has a day look and a night look - one class
   apart. The console strip returns so the student can flip it live; a checkbox field
   in the operator panel (a recognize-level preview of 9.2) drives the same switch,
-  its deciding line shown folded.
+  its deciding `if`/`else` line read in a preview exercise (ex. 6).
 - **Recycles:** classes (2.4), state styles + later-rule-wins (5.3/4.6), 
   getElementById (7.3).
 
@@ -391,6 +396,19 @@ nothing is recognizable from memory.
      were always in the stylesheet. PLAY just added the label that matches them."
    - C) GSAP. -> "In Unit 6 templates, yes - but Unit 5 had no JS you'd met. Its CSS
      transitions fired when a class arrived. classList was the finger on the switch."
+6. **Predict (a first look ahead - if/else + ==).** "Soon a 'Night mode' checkbox will
+   arrive as `d.f3` - either `"1"` (ticked) or `"0"`. This decides the switch:
+   `if (d.f3 == "1") { panel.classList.add("night"); } else { panel.classList.remove("night"); }`
+   With the box ticked (`"1"`), which line runs?" Framed explicitly as a preview - the
+   student only reads and predicts; they write these in Unit 9.
+   - A) The add line - night goes on, the panel flips to its night look. **(correct)** -
+     "That's an if/else. `==` checks the value; a true test runs the if block, anything
+     else runs the else. You'll write these in Unit 9 - here you're just meeting the
+     shape."
+   - B) Both lines run, one after the other. -> "Only one branch ever runs: if the `==`
+     test is true, the if line; otherwise the else line. Never both."
+   - C) Neither, until PLAY is pressed. -> "This runs the moment the operator toggles the
+     box (an update), not on PLAY. The `==` test picks which single line fires."
 
 - **Success criteria:** at least 4/5, and the kernel (ex. 4) solved with at most one
   hint.
@@ -557,14 +575,14 @@ function stop() {
      steps, one Continue."
    - C) As many as they like. -> "The definition sets the count. After the last step,
      Continue has nothing left to call."
-3. **Fill (word bank).** "A sports podium graphic reveals bronze, then silver, then
-   gold: three phases. Complete the definition: `"steps": "___"`"
+3. **Fill (word bank).** "The Election full-screen reveals its first result, then the
+   second, then the third: three phases. Complete the definition: `"steps": "___"`"
    - Bank: `3` **(correct)**, `2`, `1`.
-   - `2` -> "Count *all* phases including the arrival: bronze arrives with play(),
-     then two Continues. Three steps."
-   - `1` -> "One step means no Continue at all - the whole podium would land at once."
+   - `2` -> "Count *all* phases including the arrival: the first result arrives with
+     play(), then two Continues. Three steps."
+   - `1` -> "One step means no Continue at all - the whole reveal would land at once."
 4. **Trace (kernel).** The operator's button log reads: PLAY, CONTINUE, CONTINUE,
-   STOP - driving a three-step podium graphic. "Tap the function that ran at each
+   STOP - driving a three-step Election reveal. "Tap the function that ran at each
    press, in order."
    - Correct: play() -> next() -> next() -> stop().
    - Choosing play() for a CONTINUE -> "Continue never re-runs play() - the graphic is
@@ -666,9 +684,9 @@ function stop() {
    "Suspects 1-3 clear: ids exist, no selectors involved, values are fine. Suspect 4:
    match every field number against the definition."
    - Correct: tap the second `d.f2`; fix to `d.f3`.
-   - Tapping `getElementById("f3")` -> "The element is right - f3's *box* updates,
-     you can see it flash. It's being fed the wrong *field*: read what's on the right
-     of the equals sign."
+   - Tapping `getElementById("f3")` -> "The element is right - `getElementById("f3")`
+     hits f3 exactly. The bug is the *field* it's fed: read what's on the right of the
+     equals sign."
 5. **Predict (kernel).** "New ticket, fresh template: *'The series label didn't change
    on air after I retyped it.'* Which suspect do you check first, and where?"
    - A) Suspect 1: the getElementById line for that field in update() - is the id

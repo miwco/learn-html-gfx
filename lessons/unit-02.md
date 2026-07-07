@@ -55,22 +55,27 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
 4. **Arrange (Parsons with indentation).** Blocks (pre-indented):
    `<div>` / `  <div>Tomas Berg</div>` / `  <div>Sports Reporter</div>` / `</div>` -
    "Build the sports strap: both lines inside one parent."
-   - Placing a line outside the wrapper -> render shows it detached, top-left, unstyled:
-     "See it stranded outside the box? Lines belong between the parent's opening and
-     closing tags."
-5. **Fix.** Render: the title line sits detached at the top-left. Code:
+   - Placing a line after the final `</div>` -> "Both lines belong between the parent's
+     opening `<div>` and its closing `</div>` - a block placed after the final `</div>`
+     is no longer inside the wrapper."
+5. **Arrange.** The title line 'News Anchor' has landed after the wrapper's closing
+   `</div>`, outside the parent:
    ```html
    <div>
      <div>Maria Kranz</div>
    </div>
    <div>News Anchor</div>
    ```
-   "The title escaped the strap. Drag it back where it belongs." Correct: line 4 moved
-   above the closing tag (indentation snaps automatically).
+   "Rebuild the strap so both lines sit between the parent's opening and closing tags."
+   Correct: both lines placed above the closing tag (indentation snaps automatically).
+   - Wrong -> "The title belongs between the parent's opening and closing tags - above
+     the final `</div>`, not after it."
 
 - **Success criteria:** at least 4/5; the Arrange (ex. 4) correct.
-- **Common wrong answers:** placing children outside the parent (ex. 4, 5 - both made
-  *visible* as a stranded element, the same failure the student saw in 1.5).
+- **Common wrong answers:** placing children after the wrapper's closing `</div>`
+  (ex. 4, 5) - in house mode the whole strap sits in one styled panel, so a mis-placed
+  block does not visibly detach; the tasks are structural (read the code position),
+  not "spot the stranded element".
 - **Duration:** 5 min.
 
 ---
@@ -99,11 +104,11 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
    - B) 1 -> "Count opening tags: three divs open, three close. Layout on the page
      doesn't change the structure."
    - C) 5 -> "Closing tags don't create new elements - each pair is *one* element."
-3. **Fix.** Render: the LIVE badge's highlight bleeds across the rest of the line.
-   Code: `<div><span>LIVE</div></span>`
-   "Boxes must close inside-out. Tap the first tag that's in the wrong place."
-   Correct: `</div>` (accepting a tap on `</span>` too) -> fix offered: swap the two
-   closing tags.
+3. **Fix.** An inside-out closing-order puzzle. Code: `<div><span>LIVE</div></span>`
+   "Boxes must close inside-out - tap the first closing tag that's out of place."
+   Correct: `</div>` (the span opened last, so it must close first) -> fix offered: swap
+   to `</span>`. Honest success: it looks the same on screen (the browser quietly patches
+   this one), but correct nesting keeps styles and scripts pointing at the right box.
    - Tapping the openers -> "The openers are fine - LIVE should be a span inside a div.
      The problem is the closing *order*."
 4. **Arrange (indent the tree).** Five unindented lines of the score strap (outer div,
@@ -120,8 +125,9 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
 
 - **Success criteria:** at least 4/5; ex. 3 (crossed nesting) solved with at most one
   hint.
-- **Common wrong answers:** crossed closers (ex. 3 - the classic beginner bug, shown
-  with a visible consequence); counting closers as elements (ex. 2C).
+- **Common wrong answers:** crossed closers (ex. 3 - the classic beginner bug, framed
+  as a reading puzzle since the browser patches it with no visible change); counting
+  closers as elements (ex. 2C).
 - **Duration:** 5 min.
 
 ---
@@ -163,11 +169,13 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
      Alexandra's."
    - *div* -> "That's the tag's type, not a name you chose. Ids describe the element's
      role in *your* graphic."
-4. **Fix.** Code has `id="name"` on both lines. Render hint: both lines pulse.
-   "Only one element may carry each id. Tap the one that should change." Correct: the
-   title line; then choose its correct id (`title`) from a bank.
-   - Tapping the name line -> "That one really *is* the name. The title line is wearing
-     the wrong badge."
+4. **Fix.** Code has `id="name"` on both lines. "Both lines carry `id="name"`, but an id
+   must point to exactly one element. Tap the line that should get a different id."
+   Correct: the title line; its id becomes `title`. Honest success: ids don't change how
+   the strap looks, but now each line has its own name, so CSS and JavaScript can point
+   at exactly one of them.
+   - Tapping the name line -> "That one really *is* the name - it's the title line that
+     needs an id of its own."
 5. **Predict.** "`<div id="name">Tomas Berg</div>` - what shows on screen?"
    - A) Tomas Berg **(correct)**
    - B) name -> "Ids are for the machine and for you - never for the viewer."
@@ -218,7 +226,7 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
    - B) 1 -> "Both lines wear the label, so both change - that's exactly why we used a
      class and not an id."
    - C) Every element in the template. -> "Only the elements *carrying* the class. The
-     logo has no `class='line'`, so it's untouched."
+     wrapper div has no `class="line"`, so it's untouched."
 3. **Fill (word bank).** "Give the away team's score the same label as the home team's:
    `<span class="_____">2</span>`" Bank: *score* **(correct)**, *away*, *span*.
    - *away* -> "Then the two scores would be different families and couldn't share a
@@ -228,17 +236,18 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
    "The strap's one-and-only background panel -> id or class?" -> id.
    "Every headline in the ticker -> id or class?" -> class.
    - Wrong -> "One of a kind -> id. A family that shares a look -> class."
-5. **Fix.** The ticker's three headlines; render shows the middle one unstyled (wrong
-   color, no padding). Code:
+5. **Fix.** The ticker's three headlines, rendered uniformly (all three read alike on
+   screen - the typo has no visible effect yet). Code:
    ```html
    <div class="headline">Storm warning issued for the west coast</div>
    <div class="headlnie">Parliament votes on the budget tonight</div>
    <div class="headline">HIFK wins the derby 4 - 2</div>
    ```
-   "One headline won't take the shared style. Tap the odd one out." Correct: the typo
-   `headlnie`; fix via bank.
-   - Tapping a styled line -> "That one renders correctly - compare the class spellings
-     *letter by letter*. Machines don't forgive typos." (This is deliberate groundwork
+   "All three headlines should carry `class="headline"`, but one is misspelled, so in
+   Unit 3 it won't pick up the shared style. Read the class names and tap the odd one
+   out." Correct: the typo `headlnie`; fix via bank.
+   - Tapping a correctly spelled line -> "That class is spelled right. Compare the three
+     class names *letter by letter* - one of them is off." (This is deliberate groundwork
      for lesson 8.7's debugging method.)
 
 - **Success criteria:** at least 4/5; the id-vs-class pair (ex. 4) both correct.
@@ -406,8 +415,8 @@ the **score strap**, and from 2.5 the **NN logo** and a **weather icon**.
     strap when it animates. (See: Boxes inside boxes.)" -> offers micro-review 2.1.
   - swapped ids -> "The operator's name would land in the title slot in Unit 7 - ids
     must match the element's job. (See: The id.)" -> micro-review 2.3.
-  - missing class -> render shows the unstyled line: "One line lost the family look -
-    which label is it missing? (See: The class.)"
+  - missing class -> "One line is missing the family label it needs to share the look
+    in Unit 3 - which line, and which label? (See: The class.)"
   - crossed/unclosed tags -> the 1.4/2.2 swallowed-content render plus the inside-out
     rule.
 - **Duration:** 6-7 min.

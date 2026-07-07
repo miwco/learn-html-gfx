@@ -11,8 +11,13 @@ play it without touching code.
 `<head>`; first two DataFields feed the rundown preview.
 
 **Conventions:** as in unit-01.md. Two unit-specific stage devices:
-- The **console strip** from 6.1 returns for 7.3-7.6: a one-line JS sandbox under the
-  render where the student runs single statements and sees the consequence live.
+- The **friendly on-air error note** is a real player affordance: when a template's JS
+  throws (a `getElementById` that returns nothing then is used, an assignment to a
+  whole element, a read off `undefined`, an unknown name), the stage shows a
+  plain-language red note - e.g. "The code reached for an element that isn't on the
+  page - it grabbed nothing" - instead of raw JS jargon, and the app leaves the
+  exercise's own feedback intact. The empty-grab and bad-assignment demos in 7.3-7.4
+  rely on this note.
 - The **boilerplate unseals progressively**: 7.2 opens the `play()`/`stop()` seal
   (placed in 1.2/5.3), 7.6 reveals `update`, 7.8 opens the 2.6 "definition" seal. By
   the checkpoint, nothing in the template is hidden any more.
@@ -35,9 +40,9 @@ and the **NN bug**.
   `function flash() { ... }` - the word `function`, the name you choose, empty
   parentheses, and the recipe's steps between the braces. Writing it down runs
   nothing. It waits, under its name, until something calls it."
-- **Context:** a third button appears next to PLAY/STOP: **MY BUTTON**. The app wires
-  nothing - the button simply calls `flash()`. If a recipe by that name exists, it
-  runs; if not, nothing happens. The student experiences both states.
+- **Context:** the stage's third button, **CONTINUE**, is wired to call `flash()`. If
+  a recipe by that name exists, it runs; if not, nothing happens. The student
+  experiences both states.
 - **Recycles:** function calls (6.1), `fromTo` (6.5), the settings object (6.2),
   id targets (3.3/6.1).
 
@@ -66,8 +71,8 @@ function flash() {
      render: nothing moved. Definitions wait to be called."
    - C) Yes, but only once. -> "Not even once. The steps inside the braces are
      stored, not run. Calling the name runs them - as many times as it's called."
-3. **Observe (interactive).** "Now press MY BUTTON." (The strap flashes.) "Press it
-   again." (It flashes again.) "What does MY BUTTON do?"
+3. **Observe (interactive).** "Now press CONTINUE." (The strap flashes.) "Press it
+   again." (It flashes again.) "What does the button do?"
    - A) It *calls* `flash()` - and the stored recipe runs. **(correct)**
    - B) It contains the animation itself. -> "The button holds nothing but a name.
      Delete the definition and the button goes dead - the recipe is yours, in the
@@ -90,8 +95,8 @@ function flash() {
      recipe - they'd run immediately, on their own. Everything the recipe owns lives
      between `{` and `}`."
 6. **Predict (define-vs-run, second angle).** "A template contains
-   `function flash() { ... }` and MY BUTTON is never pressed all evening. How many
-   times does the strap flash?"
+   `function flash() { ... }` and the CONTINUE button is never pressed all evening.
+   How many times does the strap flash?"
    - A) 0 **(correct)** - "Defined, never called: the recipe just waits. Tomorrow you
      meet the caller that matters - SPX itself."
    - B) 1 -> "Defining is not a first run. Zero calls, zero flashes."
@@ -203,18 +208,17 @@ function stop() {
   element - by the id you gave it in Unit 2. `document.getElementById("name")` means:
   in this document, get the element whose id is `name`. One id, one element, one
   grip. And note: the name goes in *alone* - no hash. The hash is CSS spelling."
-- **Context:** the console strip returns. Every successful grab is visualized: the
-  grabbed element lights up on the render with a "held" outline, so an empty grab is
-  *visibly* empty.
+- **Context:** every successful grab is visualized: the grabbed element lights up on
+  the render with a "held" outline, so an empty grab is *visibly* empty.
 - **Recycles:** ids (2.3), dot-and-hash selectors (3.3 - now contrasted), the id
   strings GSAP targets use (6.1 - which *do* wear the hash, like CSS).
 
 **Exercises**
 
-1. **Observe (interactive).** Three prepared lines in the console strip:
+1. **Observe (interactive).** Three grabs ran, one per line:
    `document.getElementById("name")`, `document.getElementById("title")`,
-   `document.getElementById("bug")`. "Run each line and watch the render. Then tap
-   the element the *third* line grabbed." Correct: the corner bug lights up.
+   `document.getElementById("bug")`. "Tap the element the *third* line grabbed."
+   Correct: the corner bug lights up.
    - Tapping a strap line -> "That was one of the first two grabs. The third asked
      for the id `bug` - the grip always matches the id, letter for letter."
 2. **Predict.** "`document.getElementById("title")` - which element lights up?"
@@ -232,9 +236,9 @@ function stop() {
      id."
    - `img` -> "That's the tag's type. The grip needs the one element's own name -
      its id."
-4. **Fix.** **(kernel)** The console strip shows a grab that came back *empty* - no
-   element lights up, and a friendly error overlay reads: "Nothing in this template
-   has the id `#name`."
+4. **Fix.** **(kernel)** A grab came back *empty* - no element lights up, and the
+   friendly on-air error note says the code reached for an element that isn't on the
+   page: the grip closed on nothing.
    ```js
    document.getElementById("#name")
    ```
@@ -270,9 +274,9 @@ function stop() {
   `document.getElementById("name").textContent = "Tomas Berg";` and the strap changes
   live, on air - your Unit 1 edit, now done by code. That's the trick everything
   'live' is built on."
-- **Context:** the console strip, on air over the program feed. One line retitles the
-  strap; one line turns the weather from sun to rain. The student watches code do
-  what their fingers did in 1.5 and 2.5.
+- **Context:** on air over the program feed. One line retitles the strap; one line
+  turns the weather from sun to rain. The student watches code do what their fingers
+  did in 1.5 and 2.5.
 - **Recycles:** grabbing (7.3), text-is-what-shows (1.5), img src + the asset drawer
   (2.5), ids (2.3).
 
@@ -284,9 +288,9 @@ document.getElementById("icon").src = "weather-icon-rain.png";
 
 **Exercises**
 
-1. **Observe (interactive).** "Run the first line." (The strap's name changes on
-   air.) "Run the second." (Sun becomes rain.) "Which line changed a *picture*?"
-   Correct: the `.src` line.
+1. **Observe (interactive).** "Press PLAY to run the first line." (The strap's name
+   changes on air.) "The second line swaps sun for rain." "Which line changed a
+   *picture*?" Correct: the `.src` line.
    - Choosing the `.textContent` line -> "That one rewrote text. Pictures live in
      `src` - the same attribute you edited by hand in 2.5, now set from JS."
 2. **Predict.** "We run: `document.getElementById("title").textContent = "Sports Reporter";`
@@ -305,8 +309,8 @@ document.getElementById("icon").src = "weather-icon-rain.png";
      getElementById - no bridge, no change."
    - C) It renames the element's id. -> "Nothing was grabbed, so nothing was
      touched. Grab first, set second - always two steps, even on one line."
-4. **Fix.** The console strip errors: a friendly overlay reads "You're assigning to
-   the element itself - what *part* of it should change?"
+4. **Fix.** The strap threw an error - the player couldn't run this line, so the
+   friendly on-air error note appears instead of raw JS jargon.
    ```js
    document.getElementById("name") = "Alexandra Rivera";
    ```
@@ -345,8 +349,8 @@ document.getElementById("icon").src = "weather-icon-rain.png";
   value tagged `f0`. The labels are f0, f1, f2 ... because that's how SPX ships
   operator fields - you'll see the full logic of that naming in lesson 7.7."
 - **Context:** "tonight's rundown data" rendered as a luggage-tag visual - two tags
-  hanging off one bundle. The console strip holds the bundle, already opened (how it
-  *arrives* - sealed - is tomorrow's lesson, 7.6). Tapping a tag pops its value out.
+  hanging off one bundle. The bundle is shown already opened (how it *arrives* -
+  sealed - is tomorrow's lesson, 7.6). Tapping a tag pops its value out.
 - **Recycles:** the settings object (6.2 - "you've been *writing* bundles since
   Unit 6; now you *read* one"), the strap's two-line content (1.1).
 
@@ -358,7 +362,7 @@ data = { f0: "Maria Kranz", f1: "News Anchor" }
 **Exercises**
 
 1. **Observe (interactive).** "Tap the tag `f1` on the bundle." (Its value, *News
-   Anchor*, pops out.) "Now run `data.f0` in the console strip. What came out?"
+   Anchor*, pops out.) "Now read `data.f0`. What came out?"
    - A) Maria Kranz **(correct)**
    - B) f0 -> "f0 is the *tag*. Reading `data.f0` hands you what hangs off the tag -
      the value."
@@ -376,18 +380,17 @@ data = { f0: "Maria Kranz", f1: "News Anchor" }
    - `name` -> "There's no tag called `name` in this bundle. SPX ships fields as f0,
      f1, ... Read the tags that exist."
    - `data` -> "`data` is the bundle itself. After the dot comes a *tag*."
-4. **Fix.** **(kernel)** The console strip shows a read that came back empty -
-   nothing pops off the bundle:
+4. **Fix.** **(kernel)** A read came back empty - nothing pops off the bundle:
    ```js
    data.name
    ```
    "You asked for a tag this bundle doesn't have, so you got nothing - no error, no
-   warning, just nothing. Tap the problem, then fix it from the bank."
-   Correct: `name`; fix: `f0` (bank: `f0`, `f1`, `"name"`).
+   warning, just nothing. Tap the wrong tag - it snaps to one that exists."
+   Correct: `name` snaps to `f0`.
    - Tapping `data` -> "The bundle is real and full. The tag you asked it for isn't.
      Read the labels that exist, not the ones you wish existed."
-   - Fixing with `"name"` -> "Quotes don't create the tag. This bundle's tags are f0
-     and f1 - nothing else."
+   - Tapping the dot -> "The dot is doing its job - it picks a tag. The problem is
+     which tag was asked for."
 5. **Predict (recycle 6.2).** "You've written bundles before:
    `gsap.to("#strap", { x: 0, opacity: 1 })`. In that call, what is `opacity`?"
    - A) A label in a bundle, tagging the value 1. **(correct)** - "Same shape all
@@ -417,13 +420,14 @@ data = { f0: "Maria Kranz", f1: "News Anchor" }
   *sealed*: `data` is one long piece of text, a JSON string. Text has no tags -
   `data.f0` on the string gives you nothing. `JSON.parse(data)` breaks the seal and
   hands back the real bundle. Give it a short name - `var d = JSON.parse(data);` -
-  and read your tags off `d`. One more habit: write `d.f0 || ""` - 'the value, or
-  empty text if the tag is missing' - so a blank field never puts the word
-  *undefined* on air."
+  and read your tags off `d`. One more habit: `d.f0 || ""` means 'the value, or empty
+  text if the tag is missing' - a tidy default that keeps a blank field looking blank,
+  and stays safe the moment that value is joined into a longer string (where a raw
+  *undefined* would print as literal text)."
 - **Context:** the boilerplate unseals its third function: `function update(data)`,
-  empty, waiting. The sealed-freight demo runs in the console strip: the same bundle
-  as 7.5, now wrapped in string quotes with a "SEALED" tape graphic. Reading `.f0`
-  off the string visibly fails; off the parsed object it works.
+  empty, waiting. The sealed-freight demo runs on the code line: the same bundle as
+  7.5, now wrapped in string quotes with a "SEALED" tape graphic. Reading `.f0` off
+  the string visibly fails; off the parsed object it works.
 - **Recycles:** objects (7.5), the contract (7.2 - update joins play and stop),
   grab-and-set (7.3/7.4), defining (7.1 - update takes an *input*, named in its
   parentheses, a small extension shown, not drilled).
@@ -439,9 +443,9 @@ function update(data) {
 
 **Exercises**
 
-1. **Observe (interactive - the sealed/unsealed demo).** The console strip holds:
+1. **Observe (interactive - the sealed/unsealed demo).** The code line holds:
    `data = '{"f0":"Maria Kranz","f1":"News Anchor"}'` (the tape graphic reads
-   SEALED). "Run `data.f0`." (Nothing pops out.) "Now run `JSON.parse(data).f0`."
+   SEALED). "You read `data.f0`." (Nothing pops out.) "Now `JSON.parse(data).f0`."
    (*Maria Kranz* pops out; the tape tears.) "Why did the first try come back
    empty?"
    - A) `data` was still a string - one long piece of text with no tags to read.
@@ -454,7 +458,8 @@ function update(data) {
    straight off the delivery. The operator types *Tomas Berg*. What lands on air?"
    - A) Nothing arrives - a string has no f0 tag, so the read comes back empty.
      **(correct)**
-   - B) Tomas Berg, as intended. -> "Run it - the strap never changes. Sealed
+   - B) Tomas Berg, as intended. -> "The opposite - watch the name line blank out.
+     `data.f0` off a string gives *undefined*, which wipes the line to empty. Sealed
      freight: parse first, read second. Always."
    - C) The whole string, tags and all. -> "Close - that's what you'd get writing
      `data` alone into the element. But `data.f0` asks a *string* for a tag it
@@ -465,18 +470,18 @@ function update(data) {
      `JSON.parse`. Machines don't forgive synonyms any more than typos."
    - `f0` -> "f0 is a tag *inside* the bundle. First open the whole delivery:
      `JSON.parse`."
-4. **Predict (the safety net).** "The operator leaves the Title field blank, so the
-   parsed bundle has no f1 value. Two versions of the title line:
-   ```js
-   document.getElementById("title").textContent = d.f1;
-   document.getElementById("title").textContent = d.f1 || "";
-   ```
-   Which one keeps the word *undefined* off the air?"
-   - The second **(correct)** - render preview shows the first version putting
-     literal *undefined* on the strap. "`|| ""` means 'or, failing that, empty
-     text'. A blank field should look blank - not like a bug."
-   - The first -> "Watch the render: *undefined*, on air, in the channel font. The
-     safety net `|| ""` is two characters of professionalism."
+4. **Predict (the safety net).** "The operator leaves the Title field blank, so
+   `d.f1` comes back *undefined*. Setting `textContent = d.f1` just *blanks* the line
+   (undefined never prints as a word here) - so why do pros still write `d.f1 || ""`
+   everywhere?"
+   - Because the moment that value is joined into a string - like `"Live: " + d.f1` -
+     `undefined` turns into the literal word on air; `|| ""` keeps it clean.
+     **(correct)** - "A plain `textContent` quietly hides an `undefined`, but
+     string-joining exposes it. `|| ""` is two characters of insurance that hold in
+     both places."
+   - No reason - blank is blank either way. -> "For a plain `textContent`, true -
+     both blank. But the moment that value is built into a longer string, `undefined`
+     shows up as literal text. The habit protects you there."
 5. **Arrange.** Blocks: `function update(data) {` / `var d = JSON.parse(data);` /
    `document.getElementById("name").textContent = d.f0 || "";` / `}` - "Assemble the
    canonical update: open the delivery, then put the value where it belongs."
@@ -489,8 +494,9 @@ function update(data) {
   fresh variant (skip-parse with the weather strap's bundle) is asked at the end.
 - **Common wrong answers:** string treated as object (ex. 1, 2 - deliberately
   *experienced* before it's explained; this is the unit's most-diagnosed checkpoint
-  failure, so it gets the demo, the kernel, and the arrange); *undefined* on air
-  (ex. 4 - taught as a taste/professionalism rule, like 5.5's asymmetric out).
+  failure, so it gets the demo, the kernel, and the arrange); *undefined* leaking
+  through a string-join (ex. 4 - taught as a taste/professionalism rule, like 5.5's
+  asymmetric out).
 - **Duration:** 5 min.
 
 ---
@@ -801,8 +807,9 @@ drive: the operator's view is the whole point.
     sealed-freight icon on `data` -> missing JSON.parse -> 7.6.
   - Name and title swap on air -> "Crossed wires: each element must take its own
     field. (See: The f0 handshake.)" -> micro-review 7.7.
-  - *undefined* on air when a field is blanked -> "A blank field should look
-    blank. (See: Unpack the delivery, the safety net.)" -> 7.6.
+  - a blank field left unguarded (no `|| ""`) -> "A blank field should look
+    blank - and stay safe if its value is ever built into a string. (See: Unpack
+    the delivery, the safety net.)" -> 7.6.
   - PLAY or STOP dead -> "SPX calls exactly `play` and `stop` - is anyone
     answering to those names?" -> 7.2; a malformed definition (missing braces,
     body outside them) -> 7.1.

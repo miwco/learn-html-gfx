@@ -27,8 +27,10 @@ bottom; strap home = left 120, top 860; bug home = the safe corner.
   wide, 1080 tall - always. A position is just two numbers counted from the top-left
   corner: x across, y down. y grows downward, like reading."
 - **Context:** the grid overlay appears for the first time (togglable, stays available
-  for the whole course); crosshairs read out x/y as the student drags a marker over
-  the studio feed. No screens of different sizes, no reflowing - broadcast's gift.
+  for the whole course); a crosshair marker renders at any given stage point with a
+  live (x, y) readout label, so coordinate questions show the real point on the frame
+  instead of only naming it in the prompt. No screens of different sizes, no
+  reflowing - broadcast's gift.
 - **Recycles:** the fixed 1920x1080 canvas (1.3, now made operational), px on the
   1080p canvas (3.7), the full-frame paint warning (1.3 ex. 3).
 
@@ -526,13 +528,14 @@ bottom; strap home = left 120, top 860; bug home = the safe corner.
 
 **Exercises**
 
-1. **Observe.** The slider runs the strap panel from 1 down to 0 over the match
-   footage. "Play with it, then answer: which range keeps the strap readable over
-   the busy crowd?"
-   - A) Around 0.8-0.9. **(correct)** - "NN's house value is 0.85: the picture
-     breathes, the words hold."
-   - B) Around 0.3-0.4. -> render at 0.35: "See the crowd through the letters? Below
-     about 0.7 a busy feed eats the text. Too thin for air."
+1. **Observe.** The strap panel starts faint - `opacity: 0.35`, the crowd showing
+   straight through the words over the match footage. "Which range keeps the strap
+   readable over the busy crowd?" On the correct answer the panel firms to the house
+   0.85, so the fade plays out on screen, not just in the prompt.
+   - A) Around 0.8-0.9. **(correct)** - "NN's house value is 0.85 - watch it firm up:
+     the picture still breathes, but now the words hold."
+   - B) Around 0.3-0.4. -> "That's about what you're already seeing - below about 0.7
+     a busy feed eats the text. Too thin for air."
    - C) Exactly 1.0 only. -> "Readable, sure - but a solid slab feels heavy over
      video. NN trades a little solidity for air. Taste, not law."
 2. **Predict.** **(kernel)** "Two see-through effects in this frame: (A) the area

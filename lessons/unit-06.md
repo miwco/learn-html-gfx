@@ -86,15 +86,16 @@ gsap.to("#strap", { x: 0 })
      Unit 3's selectors did - by id."
    - C) Every element. -> "A call moves only what its target names. One call, one
      target - here, the bug."
-3. **Predict (kernel).** The line `gsap.to("#strap", { x: 200 })` sits in the console
-   strip. RUN has not been pressed. "What is the strap doing right now?"
+3. **Predict (kernel).** The line `gsap.to("#strap", { x: 200 })` is written, but it
+   hasn't run yet. "What is the strap doing right now?"
    - A) Nothing - a call is an instruction, and instructions happen only when they
      run. **(correct)**
    - B) It has already moved 200 pixels right. -> "The line existing changes nothing.
-     CSS *is*; JavaScript *does* - and it does it when the line runs. Press RUN and
-     watch the difference between written and executed."
+     CSS *is*; JavaScript *does* - and it does it when the line runs. Look: the strap
+     sits at home."
    - C) It is drifting right slowly on its own. -> "There's no halfway state. Before
-     RUN: nothing. After RUN: the move. The call is an action, not a description."
+     it runs: nothing. After it runs: the move. The call is an action, not a
+     description."
 4. **Fill (word bank).** "Bring the whole strap home: `gsap.to("____", { x: 0 })`"
    Bank: `#strap` **(correct)**, `strap`, `#name`.
    - `strap` -> "Without the `#`, the tool goes looking for a *tag* called strap and
@@ -239,7 +240,7 @@ gsap.to("#strap", { x: 0 })
      ticker's endless crawl *wants* `"none"`. Entrances don't.)"
    - `"power2.in"` -> "It creeps off the line and slams into place - that's a
      *leaving* curve. Hold that thought for the next question."
-2. **Predict (kernel).** "A colleague's *entrance* tween says `ease: "power2.in"`.
+2. **Predict (kernel).** "A colleague's *entrance* animation says `ease: "power2.in"`.
    How will it feel on air?"
    - A) It starts slow and slams to a stop - an exit's curve pasted onto an
      entrance; wrong feel. **(correct)**
@@ -307,7 +308,7 @@ gsap.to("#strap", { x: 0 })
 - **Learner-facing explanation:** "`gsap.to` animates TO the settings.
   `gsap.from` flips the arrow: the settings are the *starting line*, and the element
   travels home - to the position and look your CSS already gives it. That's the
-  standard entrance idiom: CSS owns the resting look, the tween owns the journey."
+  standard entrance idiom: CSS owns the resting look, the animation owns the journey."
 - **Context:** the strap's entrance becomes
   `gsap.from("#strap", { y: 40, opacity: 0, duration: 0.5, ease: "power2.out" })` -
   and the Unit 5 state classes officially retire (a small on-screen send-off: "the
@@ -453,12 +454,14 @@ gsap.to("#strap", { x: 0 })
 
 - **New concept:** `gsap.timeline()` plus chained `.to(...)` calls - a sequence of
   tweens that runs in order, owning the whole graphic's entrance as one object.
-- **Learner-facing explanation:** "One tween moves one thing. A whole entrance is
-  several moves in a row - so GSAP gives you a timeline: `gsap.timeline()` starts
-  the sequence, and each chained `.to(...)` adds the next move to the queue. Out of
-  the box they run one after another, in the order written. The whole entrance
-  becomes one object - one thing to play, and later, one thing to hand to the PLAY
-  button."
+- **Learner-facing explanation:** "For a sequenced entrance the strap now wraps an
+  inner `#panel`, and the blue background moves onto that panel - so the whole card
+  slides in as one, then each line fades up inside it. One tween (GSAP's word for a
+  single animation) moves one thing. A whole entrance is several moves in a row - so
+  GSAP gives you a timeline: `gsap.timeline()` starts the sequence, and each chained
+  `.to(...)` adds the next move to the queue. Out of the box they run one after
+  another, in the order written. The whole entrance becomes one object - one thing to
+  play, and later, one thing to hand to the PLAY button."
 - **Context:** the strap's full in, written as one timeline: panel slides in, then
   the name fades up, then the title. A visual **timeline strip** (tween bars on a
   seconds ruler) sits under the code, synced: scrub it and the render follows.
@@ -546,10 +549,11 @@ gsap.timeline()
   duration. Small overlaps knit separate tweens into one designed move."
 - **Context:** yesterday's 1.0s queue, tightened to broadcast-crisp. The timeline
   strip now shows the bars sliding left under the rider's control - the overlap is
-  *visible* as bars overlapping. On the ticker, three headlines enter with one
-  `stagger` call (recognize level, closing the loop from 5.6).
+  *visible* as bars overlapping. On a headlines panel - three stacked lines - three
+  headlines enter with one `stagger` call (recognize level, closing the loop
+  from 5.6).
 - **Recycles:** timelines (6.6), stagger taste (5.6 - the beat between lines that
-  reads "designed"), class selectors (2.4/3.3 - the ticker call targets
+  reads "designed"), class selectors (2.4/3.3 - the headlines-panel call targets
   `".headline"`).
 
 **Code slice (the tightened entrance, ex. 2-4):**
@@ -599,7 +603,7 @@ gsap.timeline()
      0.3s tween."
    - Choosing `-=0.4` -> "Even earlier - now the title *leads* the name, and the
      hierarchy flips backwards (remember 5.6: the important line lands first)."
-5. **Predict (stagger, recognize level).** The ticker's three headlines:
+5. **Predict (stagger, recognize level).** A headlines panel - three stacked lines:
    ```js
    gsap.from(".headline", { y: 20, opacity: 0, duration: 0.3, ease: "power2.out", stagger: 0.1 })
    ```

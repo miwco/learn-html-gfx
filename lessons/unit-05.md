@@ -126,8 +126,9 @@ buttons, Unit 8 shows the switch").
   `scale(1)` is its normal size, `scale(0)` is nothing at all, `scale(2)` is double.
   A bug that pops on air starts at `scale(0)` - invisible, but still pinned, still in
   the code, ready to enter."
-- **Context:** the NN bug at its permanent top-right home (right 40, top 40, from
-  4.3), with a scale slider. The safe-area overlay is on.
+- **Context:** the NN bug at its permanent top-right home (right 96, top 54, from
+  4.3 - the title-safe corner), with a scale slider. The safe-area overlay is on. At
+  scale(1) the bug sits *inside* the safe box; only scaling it up breaches the line.
 - **Recycles:** safe areas (4.5), opacity-zero as the sibling ready state (4.7), the
   bug's pin (4.3), the score strap (1.6).
 
@@ -135,8 +136,8 @@ buttons, Unit 8 shows the switch").
 ```css
 #bug {
   position: absolute;
-  right: 40px;
-  top: 40px;
+  right: 96px;
+  top: 54px;
   transform: scale(1);
 }
 ```
@@ -607,14 +608,17 @@ buttons, Unit 8 shows the switch").
 
 **Exercises**
 
-1. **Observe.** "Scrub the timeline to the 60% mark. What size is the bug?"
-   - A) A little over full size. **(correct)** -> "1.15 - the overshoot. The routine
-     deliberately goes *past* the target, then settles back. That's what makes a pop
-     feel alive."
-   - B) Nothing yet. -> "That's the 0% stop. Scrub forward - by 60% the bug has
-     overshot."
-   - C) Exactly full size. -> "Full size is where it *ends* (100%). At 60% it's mid-
-     overshoot: 1.15."
+1. **Observe.** The routine is frozen at its 60% stop, where `transform: scale(1.15)`;
+   the routine ends at `scale(1)`. "Next to where it finally lands, what size is the
+   bug right now?" (Both values are given in the prompt, so the answer is a comparison -
+   1.15 vs 1 - not an eyeballed guess at a 15% difference.)
+   - A) A little over full size. **(correct)** -> "1.15 is bigger than 1. The routine
+     deliberately overshoots *past* the target, then settles back to full size. That
+     overshoot is what makes a pop feel alive."
+   - B) Still smaller than full - not there yet. -> "The other way round: 1.15 is
+     bigger than 1, not smaller. It's mid-overshoot, a touch past full size."
+   - C) Exactly full size. -> "Full size is scale(1), where it *ends* (100%). At the
+     60% stop it's at scale(1.15) - a little past full."
 2. **Predict (kernel).** Reading the `pop` block cold: "What happens at 60%?"
    - A) The bug has overshot to 1.15 - slightly too big, about to settle back.
      **(correct)** -> "You read a routine: at 60% *of the way through*, scale is

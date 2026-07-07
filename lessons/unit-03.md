@@ -442,11 +442,14 @@ Running graphics this unit: the **Nightly News strap** (wrapper now carrying
    that matches the card."
    - Correct: Archivo. Wrong -> "Compare letter shapes with the card's specimen - the
      card is the truth, not taste. Look at the a and the g."
-2. **Predict (kernel).** "The playout machine doesn't have Archivo installed. What
-   does `font-family: Archivo, sans-serif;` show on air?"
-   - A) The next name on the list - a standard sans-serif face. **(correct)** (Render
-     preview: the strap in the fallback face - close, not identical.) "That's the
-     whole point of the list: the show goes on, in the nearest safe face."
+2. **Predict (kernel).** Framed as a look-ahead so the student isn't judging a
+   sans-serif answer while staring at the leftover serif: "We're about to switch the
+   strap to `font-family: Archivo, sans-serif` - but the playout machine doesn't have
+   Archivo. When we do, what shows on air?"
+   - A) The next name on the list - a standard sans-serif face. **(correct)** (On
+     answer the strap flips from the serif to a plain sans-serif face - close, not
+     identical.) "Watch it flip to a plain sans-serif face - the machine walks the
+     list left to right and uses the first font it owns: the show goes on."
    - B) Nothing - the text disappears. -> "Text never vanishes over a missing font -
      the list exists exactly for this. The machine walks it left to right and uses the
      first face it owns."
@@ -514,10 +517,12 @@ Running graphics this unit: the **Nightly News strap** (wrapper now carrying
 
 **Exercises**
 
-1. **Observe (the legibility slider).** A slider drives the title's `font-size` from
-   12px to 60px; below 24px the slider track turns red ("too small to read from the
-   sofa") and the render zooms out to a living-room view of the TV. "Set the title to
-   the card's 28px. Why is the red zone red?"
+1. **Predict.** The threshold is stated in words rather than shown on a slider: the
+   title sits at `font-size: 12px` on the stage, dwarfed by the 44px name, and the
+   card asks for 28px because broadcast type has a minimum readable size. "The title
+   is set to `font-size: 12px` - find it on the stage, dwarfed by the 44px name. The
+   card asks for 28px because broadcast type has a minimum readable size. Why does TV
+   need that minimum?"
    - A) TV is read from across a room - broadcast type has a minimum size.
      **(correct)**
    - B) Small text is against the rules of CSS. -> "CSS allows any size - the *room*

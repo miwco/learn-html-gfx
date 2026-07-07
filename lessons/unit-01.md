@@ -127,8 +127,10 @@ made real.
    called the ________." Bank: *operator* **(correct)**, *presenter*, *editor*.
    - *presenter* -> "The presenter is on camera. The operator sits at the graphics desk -
      you'll meet their screen in Unit 7."
-5. **Observe (sequencing).** "Press PLAY, watch the strap come in - then tap the button
-   that takes it off air." Requires the full cycle unaided.
+5. **Predict (sequencing).** "You press PLAY on the stage and the strap comes in. Which
+   button takes it back off air - PLAY or STOP?" STOP **(correct)** / PLAY -> "PLAY
+   already brought it on. The button that takes a graphic OFF air is STOP." A clear
+   either/or, so the answer is naming STOP, not pressing the live transport control.
 
 - **Success criteria:** completes the PLAY -> STOP cycle without hints; at least 3/4 of
   the questions correct.
@@ -179,9 +181,10 @@ made real.
    *1080*, *1280*, *720*.
    - *1280/720* -> "That's HD's little sibling. Broadcast graphics for SPX are authored
      at full HD: 1920 x 1080."
-5. **Observe (taste seed).** Three renders of the same strap: floating mid-frame, sitting
-   in the lower area, stretched full width. "Tap the one that looks like a real lower
-   third." Correct: lower area.
+5. **Observe (taste seed).** The same strap dropped in three places at once on the stage -
+   floating mid-frame, sitting in the lower area, stretched full width - so the student can
+   compare them side by side. "Tap the one that looks like a real lower third." Correct:
+   lower area.
    - Wrong -> "Lower thirds live in the lower part of the frame - the *lower third* of
      it. Unit 4 teaches exactly where."
 
@@ -216,14 +219,15 @@ made real.
    - B) `<div>Tomas Berg</div>` -> "Tags never appear on screen - they're instructions
      to the machine. Only the content between them shows."
    - C) div -> "The tag's *name* is for the machine too. Viewers only ever see content."
-3. **Fix.** The render shows the strap's second line has vanished. Code:
+3. **Fix.** The render shows 'Tomas Berg' still on screen, but it came up as a big heading
+   instead of the small second line. Code:
    ```html
    <div>Sports Tonight<div>
    <div>Tomas Berg</div>
    ```
-   "The 'Sports Tonight' element never ends, so it swallowed the line after it. Tap the
-   tag that's wrong." Correct: the second `<div>` on line 1; the fix choice offered is
-   `</div>`.
+   "The 'Sports Tonight' element never closes, so it swallowed the line after it - 'Tomas
+   Berg' inherited the heading's size. Tap the tag that's wrong." Correct: the second
+   `<div>` on line 1; the fix choice offered is `</div>`.
    - Tapping line 2's tags -> "Line 2 is fine. The problem starts earlier: something was
      opened and never closed."
 4. **Fill (word bank).** `<div>Alexandra Rivera` ____ - "Complete the element."
@@ -277,11 +281,12 @@ made real.
    Phone: two blanks with word banks. Web: free typing. Auto-check compares rendered
    text to the card, trimmed; case differences pass but prompt: "On air this is exactly
    how it will read - match the card's capitals."
-4. **Fix.** The render shows *Maria Kranz* unstyled in the top-left corner, outside the
-   strap. Code: `<div></div>Maria Kranz`. "The name escaped its element, so it lost the
-   strap. What happened?"
-   - A) The text sits *outside* the tags, so the strap's box is empty. **(correct)** ->
-     then drag the name between the tags to fix; PLAY confirms.
+4. **Predict.** The render shows the strap's line come up *empty*, with *Maria Kranz*
+   showing as small plain text with no styling. Code: `<div></div>Maria Kranz`. "The name
+   sits outside the element, so the strap's line holds nothing. What happened?"
+   - A) The name sits *outside* the tags, so the element between them holds nothing.
+     **(correct)** -> then move the name back between the tags to fix; PLAY confirms it
+     fills the strap and gets its styling.
    - B) The name is spelled wrong. -> "Spelling is fine - position isn't. Where does
      content belong relative to the tags?"
    - C) PLAY wasn't pressed. -> "It's on air already - just in the wrong place. The code

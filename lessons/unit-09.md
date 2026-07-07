@@ -199,8 +199,10 @@ drives the logo's `hidden` class.)
    - `Centered` -> "That's the human-facing text again. The value is what lands in
      `d.f2` - and your code is listening for `center`."
    - `f2` -> "f2 is the field's *name*, not one of its choices."
-4. **Fix (kernel).** The panel's "Show logo" checkbox is ticked, but the logo is gone;
-   untick it and the logo appears. The update() slice:
+4. **Fix (kernel).** QA reports a backwards "Show logo" checkbox: with it ticked the
+   logo hides, and unticking it makes the logo appear. (A fix exercise - the operator
+   panel doesn't run on this stage, so nothing toggles live; the QA report is the
+   symptom to reason from.) The update() slice:
    ```js
    if (d.f3 == "1") {
      document.getElementById("logo").classList.add("hidden");
